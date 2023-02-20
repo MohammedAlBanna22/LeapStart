@@ -1,0 +1,21 @@
+{
+  "user": {
+    "notFoundUser": "هذا المستخدم غير موجود",
+    "incorrectIdORPassword": "خطأ في بيانات الدخول",
+    "usedEmail": "البريد الإلكتروني مستخدم بالفعل",
+    "usedMobile": "رقم الموبايل مستخدم بالفعل",
+    "WrongEmailFormat": "خطأ في صياغة البريد الإلكتروني",
+    "WrongCashDataFormat": "الرجاء التحقق من صيقة بيانات دفع الكاش",
+    "WrongBankDataFormat": "الرجاء التحقق من بيانات دفع البنك",
+    "WrongPreferedPayment": "الرجاء التحقق من طريقة الدفع",
+    "WrongPassword": "كلمة السر المدخلة خاطئة",
+    "completeSignupProcess": "يرجى إكمال عملية تسجيل الدخول",
+    "InvalidCode": "الرمز غير صالح",
+    "MobileAlreadyVerified": "رقم الموبايل مؤكد بالفعل",
+    "EmailAlreadyVerified": "البريد الالكتروني مؤكد بالفعل",
+    "WrongAddressFormat": "يرجى التحقق من تفاصيل العنوان"
+  },
+  "commonSuccess": {
+    "message": "تمت العملية بنجاح"
+  }
+}

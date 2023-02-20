@@ -1,0 +1,114 @@
+{
+  "user": {
+    "notFoundUser": "not found user",
+    "incorrectIdORPassword": "incorrect login credentials",
+    "usedEmail": "the email is already used",
+    "usedMobile": "mobile number already used",
+    "WrongEmailFormat": "wrong email format",
+    "WrongCashDataFormat": "wrong cash data format",
+    "WrongBankDataFormat": "wrong cash data format",
+    "WrongPreferedPayment": "wrong prefered payment type",
+    "WrongPassword": "icorrect entered password",
+    "completeSignupProcess": "please complete signup process",
+    "InvalidCode": "invalid code",
+    "MobileAlreadyVerified": "mobile is already verified",
+    "EmailAlreadyVerified": "email is already verified",
+    "SuccessVerification": "success verification",
+    "WrongAddressFormat": "wrong user address format",
+    "invalidToken": "invalid token",
+    "InvalidRefreshToken": "invalid refresh token",
+    "WrongMobileFormat": "wrong mobile format",
+    "passwordIsWeak": "password is weak",
+    "notVerifiedEmail": "not verified email",
+    "notVerifiedMobile": "not verified mobile",
+    "SamePassword": "the new password is the same as the old password",
+    "WrongTypeFormat": "wrong type format",
+    "notFoundFile": "not found file",
+    "invalidIdDocumentType": "invalid id document type",
+    "invalidAddressDocumentType": "invalid address document type",
+    "notVerifiedAddress": "not verified address"
+  },
+  "invoice": {
+    "FormatError": "wrong email format",
+    "WrongFixedFormat": "wrong fixed items format",
+    "WrongStatusFormat": "wrong status format",
+    "NotFoundInvoice": "not found invoice",
+    "NotYourInvoice": "not your invoice",
+    "FormatIdError": "wrong invoice id format",
+    "NotValidStatus": "not valid status",
+    "NotValidInvoice": "not valid invoice",
+    "NotAbleToEdit": "paid invoice not able to be editable",
+    "FormatFilterError": "wrong filter format",
+    "CannotChangeToRefunded": "cannot change to refunded",
+    "CannotChangeToArchived": "cannot change paid to archived",
+    "CannotChangeStatus": "cannot change status cancelled or archived"
+  },
+  "withdraw": {
+    "notEnoughBalance": "not enough balance",
+    "notFoundTransaction": "not found transaction",
+    "transactionCompleted": "transaction completed",
+    "notFoundBank": "not found bank",
+    "notFoundOffice": "not found office",
+    "notFoundWithdraw": "not found withdraw",
+    "withdrawCompleted": "withdraw completed",
+    "notReadyWithdraw": "withdraw not sent",
+    "cannotCancelWithdraw": "can't cancel withdraw",
+    "cantChangeToCompleteStatus": "can't change status to complete status",
+    "cantChangeCanceledStatus": "can't change status canceled status to any status",
+    "WrongStatus": "wrong status of payout"
+  },
+  "service": {
+    "notFoundService": "not found service",
+    "notEnableChangeStatus": "not enable change status",
+    "WrongFixedFormat": "wrong fixed items format",
+    "WrongStatusFormat": "wrong status format",
+    "cannotChangToArchive": "cannot change link that have invoices to archive",
+    "cannotChangeStatus": "cannot change archived status",
+    "notFoundFreelancer": "not found freelancer",
+    "notEnableEdit": "not enable edit",
+    "cannotChangeStatusWithInvoices": "cannot change status that have invoices"
+  },
+  "paymentMethod": {
+    "notFoundPaymentMethod": "not found payment method"
+  },
+  "office": {
+    "notFoundOffice": "not found office",
+    "WrongTimeFormat": "wrong time format"
+  },
+  "bank": {
+    "notFoundBank": "not found bank",
+    "alreadyExist": "bank already exist",
+    "notValidCodeVerification": "not valid code verification"
+  },
+  "Express": {
+    "Validator": {
+      "must_be_integer": "Invalid value, must be integer",
+      "must_be_string": "Invalid value, must be string",
+      "must_be_object": "Invalid value, must be object",
+      "must_be_date": "Invalid value, must be UTC date with ISO format, example: '2020-09-06T02:10:00.000Z'",
+      "must_be_boolean": "Invalid value, must be boolean",
+      "date_in_the_past": "Incorrect value, you can't select a time in the past",
+      "invalid_duration": "Invalid duration format",
+      "must_be_valid_object_id": "Invalid value, must be valid object id"
+    }
+  },
+  "CommonError": {
+    "pageNotFound": "Page not found!",
+    "required": "Required",
+    "Unauthorized": "Unauthorized",
+    "AccessDenied": "Access Denied",
+    "ServiceForSupportOnly": "This service is available only for supports",
+    "PageSizeValidation": "Page size must be english number, positive integer, greater than zero and maximum page size allowed is {{size}} items per page",
+    "PageNumberValidation": "Page must be english number, positive integer and greater than zero",
+    "InternalServerError": "Could not process your request.",
+    "BadRequest": "Could not process your bad request."
+  },
+  "commonSuccess": {
+    "message": "The process done successfully"
+  },
+  "ControllerMsg": {
+    "User": {
+      "UserCreated": "user has been created successfully!"
+    }
+  }
+}

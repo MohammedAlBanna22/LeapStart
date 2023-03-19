@@ -18,7 +18,6 @@ i18next
   .use(Backend)
   .init({
     fallbackLng: 'en',
-
     backend: {
       loadPath: `${__dirname}/locales/{{lng}}/{{ns}}.json`,
     },
@@ -34,6 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.disable('x-powered-by');
 
 app.use('/', require('./healthCheck'));
+
 // app.use('/api', require('./app/routes/mainRouter'));
 
 app.use('*', (req, res) =>

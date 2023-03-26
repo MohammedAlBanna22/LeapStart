@@ -32,9 +32,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.disable('x-powered-by');
 
-app.use('/', require('./healthCheck'));
+app.get('/', require('./healthCheck'));
 
-// app.use('/api', require('./app/routes/mainRouter'));
+app.use('/api/v1', require('./app/routes/mainRouter'));
 
 app.use('*', (req, res) =>
   res.status(404).send(req.t('CommonError.pageNotFound'))

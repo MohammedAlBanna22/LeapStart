@@ -5,7 +5,7 @@ const verificationSchema = new mongoose.Schema({
     type: String,
     ref: 'users',
   },
-  verificationCode: {
+  code: {
     type: String,
   },
   email: {

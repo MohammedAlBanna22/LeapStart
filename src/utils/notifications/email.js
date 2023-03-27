@@ -24,8 +24,9 @@ async function sendEmail(emails, subject, body) {
         },
       }
     );
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
   }
 }
 

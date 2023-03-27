@@ -19,7 +19,7 @@ router.post('/', [signup, validateRequest], controller.signup);
 // router.delete('/'); // if user want to delete account // isDeleted : true
 
 router.post('/send-code-email', isAuthenticated, controller.sendCodeEmail); // send verification code to email /
-
+router.use('/verify', require('./verify'));
 // router.use('/password'); // forget recover password // use send code
 
 // router.use('/upload'); // for id doc upload

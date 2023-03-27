@@ -90,6 +90,13 @@ module.exports.sendCodeToEmail = async (data) => {
     if (!user) {
       return { code: 1, message: 'user.notFoundUser', data: null };
     }
+    if (user.verifiedEmail) {
+      return {
+        code: 0,
+        message: 'user email already verified',
+        data: { _id, email: user.email },
+      };
+    }
     const code = 123456; //TODO: MAKE IT RANDOM
 
     let verification = await Verification.findOne({
@@ -101,7 +108,8 @@ module.exports.sendCodeToEmail = async (data) => {
       verification = new Verification({ userId: _id, email: user.email });
       verification = await verification.save();
     }
-    verification.verificationCode = code;
+    verification.code = code;
+    console.log(verification);
     await verification.save();
 
     await sendVerificationCodeEmail(user.email, code);

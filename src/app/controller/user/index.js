@@ -21,7 +21,7 @@ module.exports.signup = async (req, res, next) => {
 
 module.exports.login = async (req, res, next) => {
   try {
-    const { code, message, data } = await login();
+    const { code, message, data } = await login(req.body);
     if (code === 0) {
       return next(new Success(message, data));
     }

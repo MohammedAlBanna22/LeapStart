@@ -1,10 +1,10 @@
 const express = require('express');
 const { validateRequest } = require('../../../../utils/validation');
-const { signup } = require('../../../validationSchema/user');
+const { signup, login } = require('../../../validationSchema/user');
 const controller = require('../../../controller/user');
 const router = express.Router();
 
-// router.post('/login', [login, validateRequest], controller.login);
+router.post('/login', [login, validateRequest], controller.login);
 
 router.post('/', [signup, validateRequest], controller.signup);
 

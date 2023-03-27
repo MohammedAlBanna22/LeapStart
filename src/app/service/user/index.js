@@ -43,4 +43,39 @@ module.exports.signup = async (data) => {
   }
 };
 
-module.exports.login = async () => {};
+module.exports.login = async (data) => {
+  try {
+    const { email, password } = data;
+
+    const user = await Users.findOne({ email, isDeleted: false });
+
+    if (!user) {
+      return { code: 2, message: 'user.incorrectIdORPassword', data: null };
+    }
+
+    const isCorrectPassword = await bcrypt.compare(password, user.password);
+    if (!isCorrectPassword) {
+      return { code: 2, message: 'user.incorrectIdORPassword', data: null };
+    }
+
+    const accessToken = jwt.createAccessToken({
+      id: user._id,
+      role: user.role,
+    });
+    const refreshToken = jwt.createRefreshToken({
+      id: user._id,
+      role: user.role,
+    });
+
+    await user.save();
+
+    return {
+      code: 0,
+      message: 'commonSuccess.message',
+      data: { accessToken, refreshToken, user },
+    };
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

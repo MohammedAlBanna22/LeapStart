@@ -54,3 +54,24 @@ module.exports.signup = checkSchema({
     },
   },
 });
+
+module.exports.login = checkSchema({
+  email: {
+    in: 'body',
+    exists,
+    isString,
+    optional: false,
+    custom: {
+      options: (value) => {
+        const regex = /\S+@\S+\.\S+/;
+        return regex.test(value);
+      },
+      errorMessage: () => 'user.WrongEmailFormat',
+    },
+  },
+  password: {
+    in: 'body',
+    exists,
+    optional: false,
+  },
+});

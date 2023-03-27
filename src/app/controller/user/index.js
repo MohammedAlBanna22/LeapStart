@@ -6,7 +6,8 @@ const {
   Success,
   Created,
 } = require('../../../utils/response/success/successes');
-const { signup, login } = require('../../service/user/index');
+const { signup, login, sendCodeToEmail } = require('../../service/user/index');
+
 module.exports.signup = async (req, res, next) => {
   try {
     const { code, message, data } = await signup(req.body);
@@ -25,6 +26,26 @@ module.exports.login = async (req, res, next) => {
     if (code === 0) {
       return next(new Success(message, data));
     }
+    return next(new BadRequest(message));
+  } catch (error) {
+    return next(new InternalServerError(error));
+  }
+};
+
+module.exports.sendCodeEmail = async (req, res, next) => {
+  try {
+    const { code, message, data } = await sendCodeToEmail({
+      _id: req.user._id,
+    });
+
+    if (code === 1) {
+      return next(new NotFound(message, data));
+    }
+
+    if (code === 0) {
+      return next(new Success(message, data));
+    }
+
     return next(new BadRequest(message));
   } catch (error) {
     return next(new InternalServerError(error));

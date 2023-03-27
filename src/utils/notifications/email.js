@@ -38,21 +38,8 @@ async function sendVerificationCodeEmail(email, code) {
   `;
   const emails = [email];
 
-  sendEmail(emails, subject, body);
-}
-
-async function sendInvoiceEmail(email, hashCode) {
-  const { FRONTEND_URL } = process.env;
-  const subject = 'Incoming Invoice';
-  const body = `
-  <p>Hi,</p>
-  <br>
-  <p>The invoice link is: <a href="${FRONTEND_URL}/invoice/${hashCode}">here</a></p>
-  `;
-  const emails = [email];
-
-  sendEmail(emails, subject, body);
+  await sendEmail(emails, subject, body);
 }
 
 module.exports.sendEmail = sendEmail;
-module.exports.sendInvoiceEmail = sendInvoiceEmail;
+module.exports.sendVerificationCodeEmail = sendVerificationCodeEmail;

@@ -2,6 +2,8 @@ const express = require('express');
 const { validateRequest } = require('../../../../utils/validation');
 const { signup, login } = require('../../../validationSchema/user');
 const controller = require('../../../controller/user');
+const isAuthenticated = require('../../../../utils/middleware/auth/auth');
+
 const router = express.Router();
 
 router.post('/login', [login, validateRequest], controller.login);
@@ -16,11 +18,11 @@ router.post('/', [signup, validateRequest], controller.signup);
 
 // router.delete('/'); // if user want to delete account // isDeleted : true
 
-// router.post('/sendVerficationCode'); // send verification code to email /
+router.post('/send-code-email', isAuthenticated, controller.sendCodeEmail); // send verification code to email /
 
 // router.use('/password'); // forget recover password // use send code
 
-// router.use('/uploadId'); // for id doc upload
+// router.use('/upload'); // for id doc upload
 
 /// logout is it front or back end work ???
 

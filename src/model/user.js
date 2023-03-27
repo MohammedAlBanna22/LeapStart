@@ -52,15 +52,6 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isBlocked: {
-      type: Boolean,
-      default: false,
-    },
-
-    balance: {
-      type: Number,
-      default: 0,
-    },
 
     role: {
       type: String,
@@ -68,16 +59,25 @@ const UserSchema = new mongoose.Schema(
       default: 'user',
     },
 
+    isClientVerified: {
+      type: Boolean,
+      default: false,
+    },
+    isExpert: {
+      type: Boolean,
+      default: false,
+    },
+
+    isBlocked: {
+      type: Boolean,
+      default: false,
+    },
     lastLogin: {
       type: Date,
       default: Date.now,
     },
     lastLoginIP: {
       type: String,
-    },
-    profit: {
-      type: Number,
-      default: 0,
     },
     isDeleted: {
       type: Boolean,

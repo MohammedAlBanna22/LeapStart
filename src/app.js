@@ -10,7 +10,7 @@ const { handleSuccess } = require('./utils/response/success');
 
 const app = express();
 
-// app.use(cors());
+app.use(cors());
 
 app.use(i18nextMiddleware.handle(i18next));
 i18next

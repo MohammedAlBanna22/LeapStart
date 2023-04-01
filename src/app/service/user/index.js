@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 module.exports.signup = async (data) => {
   try {
     const { name, email, password, country, phone } = data;
+   
     const { SALT } = process.env;
     const isUsedEmail = await Users.findOne({ email, isDeleted: false });
     if (isUsedEmail) {
@@ -123,3 +124,57 @@ module.exports.sendCodeToEmail = async (data) => {
     throw new Error(error);
   }
 };
+
+
+
+
+
+///**Search by id**/
+
+module.exports.getUserById = async (data) => {
+  try{
+    const _id  = data;
+    const user = await Users.findOne({_id,isDeleted:false});
+    if(!user){
+      return { code: 2, message: 'userNotfound', data: null };
+  }
+    return {
+      code: 0,
+      message: 'user info',
+      data: {  user },
+    };
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+  
+  };
+
+
+
+  
+  module.exports.deleteUserInfo = async (data) => {
+    try{
+      const { _id } = data;
+      const user = await Users.findOne({
+        _id:_id,
+        isDeleted:false, 
+      });
+  
+      if(!user){
+        return { code: 2, message: 'userNotfound', data: null };
+    }
+    user.isDeleted= true;
+    await user.save();
+
+      return {
+        code: 0,
+        message: 'user delete succsessfully ',
+        data: null //{  user },
+      };
+    }
+    catch (error) {
+      throw new Error(error);
+    }
+    
+    };

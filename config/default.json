@@ -1,0 +1,216 @@
+{
+  "PENDING_VERIFICATION": "pending_verification",
+  "PENDING_APPROVAL": "pending_approval",
+  "PENDING_PAYMENT": "pending_payment",
+  "PENDING": "pending",
+  "SENT": "sent",
+  "PAID": "paid",
+  "REFUNDED": "refunded",
+  "ARCHIVED": "archived",
+  "APPROVED": "approved",
+  "CANCELLED": "cancelled",
+  "REJECTED": "rejected",
+  "HOURLY": "hourly",
+  "FIXED": "fixed",
+  "COMPANY": "company",
+  "INDIVIDUAL": "individual",
+  "ACTIVE": "active",
+  "INACTIVE": "inactive",
+  "ASKS_FOR_APPROVAL": "Asks for Approval",
+  "READY": "ready",
+  "COMPLETED": "completed",
+  "CANCELED": "canceled",
+  "CASH": "cash",
+  "BANK": "bank",
+  "ROLE_USER": 0,
+  "ROLE_SUPPORT": 1,
+  "USER_ID": "User ID",
+  "USER_ADDRESS": "User Address",
+  "WITHDRAW_BANK": "withdraw bank",
+  "WITHDRAW_CASH": "withdraw cash",
+  "INVOICE": "invoice",
+  "SERVICE": "service",
+  "CANCEL_WITHDRAW": "cancel withdraw",
+  "INVOICE_STATUS_RECORD": {
+    "SENT": "sent",
+    "PAID": "paid",
+    "PENDING": "pending",
+    "PENDING_VERIFICATION": "pending_verification"
+  },
+  "ENDPOINTS": {
+    "APP": {
+      "USER": {
+        "LOGIN": "/api/user/login",
+        "SIGNUP": "/api/user/signup",
+        "SEND_EMAIL_VERIFICATION": "/api/user/send-code-email",
+        "SEND_MOBILE_VERIFICATION": "/api/user/send-code-mobile",
+        "PASSWORD": {
+          "FORGOT": "/api/user/password/forgot",
+          "VERIFY_CODE": "/api/user/password/verify-code",
+          "RECOVER": "/api/user/password/recover"
+        },
+        "VERIFY": {
+          "EMAIL": "/api/user/verify/email",
+          "MOBILE": "/api/user/verify/mobile",
+          "REFRESH_TOKEN": "/api/user/verify/refresh-token"
+        },
+        "UPLOAD": {
+          "ADDRESS": "/api/user/upload/address",
+          "ID": "/api/user/upload/id"
+        }
+      },
+      "INVOICE": {
+        "CREATE": "/api/invoice/create",
+        "EDIT": "/api/invoice/edit",
+        "CHANGE_STATUS": "/api/invoice/change-status",
+        "CLIENT": {
+          "COMPLETE": "/api/invoice/client/complete-invoice"
+        },
+        "PAYMENT": {
+          "STRIPE": "/api/invoice/payment/stripe/webhook",
+          "PAYPAL": "/api/invoice/payment/paypal/capture"
+        }
+      },
+      "SERVICE": {
+        "CREATE": "/api/service/create",
+        "EDIT": "/api/service/edit",
+        "CHANGE_STATUS": "/api/service/change-status"
+      },
+      "WITHDRAW": {
+        "REQUEST_CASH": "/api/withdraw/request-cash",
+        "REQUEST_BANK": "/api/withdraw/request-bank",
+        "CONFIRM": "/api/withdraw/confirm-payout",
+        "CANCEL": "/api/withdraw/cancel"
+      },
+      "BANK": {
+        "ADD": "/api/bank/add",
+        "EDIT": "/api/bank/edit",
+        "DELETE": "/api/bank/delete"
+      },
+      "SETTINGS": {
+        "EDIT": "/api/settings/edit-personal-information",
+        "CHANGE_PASSWORD": "/api/settings/change-password"
+      }
+    },
+    "TEAM": {
+      "USER_MANAGEMENT": {
+        "EDIT_PERSONAL_INFORMATION": "/api/team/user/edit-personal-information",
+        "EDIT_FINANCIAL_INFORMATION": "/api/team/user/edit-financial-information",
+        "DELETE_USER": "/api/team/user/delete",
+        "CHANGE_ROLE": "/api/team/user/change-role",
+        "BLOCK": "/api/team/user/block",
+        "APPROVE_DOCUMENTS": "/api/team/user/approve",
+        "ADD_BANK": "/api/team/user/add-bank"
+      },
+      "INVOICE_MANAGEMENT": {
+        "ADD": "/api/team/invoice/add",
+        "EDIT": "/api/team/invoice/edit",
+        "CHANGE_STATUS": "/api/team/invoice/change-status"
+      },
+      "SERVICE_MANAGEMENT": {
+        "ADD": "/api/team/service/add",
+        "EDIT": "/api/team/service/edit",
+        "CHANGE_STATUS": "/api/team/service/change-status"
+      },
+      "PAYOUT_MANAGEMENT": {
+        "ADD": "/api/team/payouts/add",
+        "UPDATE": "/api/team/payouts/update",
+        "CHANGE_STATUS": "/api/team/payouts/change-status"
+      },
+      "REQUESTS_MANAGEMENT": {
+        "APPROVE": "/api/team/request/approve"
+      },
+      "PAYMENT_METHOD_MANAGEMENT": {
+        "ADD": "/api/team/payment-method/add",
+        "EDIT": "/api/team/payment-method/edit"
+      },
+      "OFFICE_MANAGEMENT": {
+        "ADD": "/api/team/office/add",
+        "EDIT": "/api/team/office/edit",
+        "DELETE": "/api/team/office/delete"
+      }
+    }
+  },
+  "NOTIFICATION_TYPES": {
+    "EMAIL_VERIFICATION": "email_verification",
+    "MOBILE_VERIFICATION": "mobile_verification",
+    "INVOICE": "invoice",
+    "SERVICE": "service",
+    "WITHDRAW_BANK": "withdraw_bank",
+    "WITHDRAW_CASH": "withdraw_cash",
+    "CANCEL_WITHDRAW": "cancel_withdraw",
+    "USER": {
+      "USER_ID": "user_id",
+      "USER_ADDRESS": "user_address",
+      "USER_BLOCK": "user_block",
+      "USER_ROLE": "user_role",
+      "USER_BALANCE": "user_balance"
+    },
+    "SPECIAL_CASES": {
+      "CHANGE_INVOICE_AND_SERVICE": "change_invoice_and_service"
+    },
+    "GENERAL": "general"
+  },
+  "NOTIFICATION_ACTIONS": {
+    "INVOICE": {
+      "REQUESTED": "requested",
+      "PAID": "paid",
+      "APPROVED_SENT": "approved_sent",
+      "PENDING": "pending",
+      "UNDER_REVIEW": "under_review",
+      "SENT": "sent",
+      "REJECTED": "rejected"
+    },
+    "USER": {
+      "USER_ID": {
+        "REQUESTED": "requested",
+        "APPROVED": "approved",
+        "REJECTED": "rejected"
+      },
+      "USER_ADDRESS": {
+        "REQUESTED": "requested",
+        "APPROVED": "approved",
+        "REJECTED": "rejected"
+      },
+      "USER_BLOCK": {
+        "BLOCKED": "blocked",
+        "UNBLOCKED": "unblocked"
+      },
+      "USER_BALANCE": {
+        "ADJUSTED": "adjusted"
+      }
+    },
+    "SERVICE": {
+      "REQUESTED": "requested",
+      "UNDER_REVIEW": "under_review",
+      "APPROVED": "approved",
+      "REJECTED": "rejected"
+    },
+    "WITHDRAW_BANK": {
+      "REQUESTED": "requested",
+      "CANCELED": "canceled",
+      "CONFIRMED": "confirmed",
+      "SENT": "sent"
+    },
+    "WITHDRAW_CASH": {
+      "REQUESTED": "requested",
+      "CANCELED": "canceled",
+      "CONFIRMED": "confirmed",
+      "READY": "ready",
+      "REMINDER": "reminder"
+    },
+    "CANCEL_WITHDRAW": {
+      "REQUESTED": "requested",
+      "APPROVED": "approved",
+      "REJECTED": "rejected"
+    },
+
+    "GENERAL": "general"
+  },
+  "EMAIL_TYPES": {
+    "VERIFICATION": "verification",
+    "INVOICE": "invoice",
+    "USER_BLOCK": "user_block",
+    "RESET_PASSWORD": "reset_password"
+  }
+}

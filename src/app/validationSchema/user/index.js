@@ -2,7 +2,7 @@ const { checkSchema } = require('express-validator');
 const { isString, exists } = require('../errorMessages');
 
 module.exports.signup = checkSchema({
-  phone: {
+ phone: {
     in: ['body'],
     exists,
     isString,

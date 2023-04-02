@@ -9,7 +9,7 @@ module.exports.exists = {
   errorMessage: () => 'CommonError.required',
 };
 module.exports.notEmpty = {
-  errorMessage: () => 'CommonError.required',
+  errorMessage: () => 'CommonError.required'
 };
 module.exports.isInt = {
   errorMessage: () => 'Express.Validator.must_be_integer',

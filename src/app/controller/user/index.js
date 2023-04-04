@@ -5,6 +5,8 @@ const {
 const {
 	Success,
 	Created,
+	NoContent,
+	Continue,
 } = require('../../../utils/response/success/successes');
 const {
 	signup,
@@ -46,7 +48,9 @@ module.exports.sendCodeEmail = async (req, res, next) => {
 		if (code === 1) {
 			return next(new NotFound(message, data));
 		}
-
+		if (code === 2) {
+			return next(new Continue(message, data));
+		}
 		if (code === 0) {
 			return next(new Success(message, data));
 		}

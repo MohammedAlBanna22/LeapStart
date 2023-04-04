@@ -14,6 +14,11 @@ const upload = multer({
 	storage,
 	fileFilter(req, file, cb) {
 		const ext = file.originalname.split('.')[1];
+		const fileparts = file.originalname.split('.');
+		if (fileparts.length > 2) {
+			cb(new UnprocessableEntity('Check File Format', false));
+		}
+
 		if (
 			ext !== 'png' &&
 			ext !== 'jpg' &&

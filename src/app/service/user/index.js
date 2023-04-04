@@ -93,7 +93,7 @@ module.exports.sendCodeToEmail = async (data) => {
 		}
 		if (user.verifiedEmail) {
 			return {
-				code: 0,
+				code: 2,
 				message: 'user email already verified',
 				data: { _id, email: user.email },
 			};

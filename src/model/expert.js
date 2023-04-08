@@ -48,7 +48,8 @@ const expertSchema = new mongoose.Schema({
 	},
 });
 
-module.exports = mongoose.model('Expert', expertSchema);
+const Expert = mongoose.model('Expert', expertSchema);
+module.exports = Expert;
 
 //  ADD BOOKED HOURS BY THE FOLLOWING CODE
 // const expert = await Expert.findById(expertId);

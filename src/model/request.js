@@ -13,9 +13,12 @@ const requestSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
 		},
+		title: {
+			type: String,
+		},
 		type: {
 			type: String,
-			enum: ['user_ID', 'expert_verify'],
+			enum: ['user_id', 'expert_verify'],
 		},
 		status: {
 			type: String,
@@ -29,4 +32,5 @@ const requestSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
-module.exports = mongoose.model('Request', requestSchema);
+const Request = mongoose.model('request', requestSchema);
+module.exports = Request;

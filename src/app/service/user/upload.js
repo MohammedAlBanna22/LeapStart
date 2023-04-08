@@ -66,15 +66,17 @@ module.exports.getIdFile = async (_id) => {
 		if (!user) {
 			return { code: 1, message: 'user not found', data: null };
 		}
-		// const file = await driveService.getFileById(user.verifiedId.idFile);
-		// if (!file) {
-		// 	return { code: 1, message: 'file not found', data: null };
-		// }
+		const file = await driveService.getFileById(user.verifiedId.idFile);
+		if (!file) {
+			return { code: 1, message: 'file not found', data: null };
+		}
+		// console.log({ file });
 		const File_ID = user.verifiedId.idFile;
+		// console.log({ File_ID });
 		return {
 			code: 0,
 			message: 'here is id file ',
-			data: { link: `https://drive.google.com/uc?id=${File_ID}` },
+			data: { ...file, link: `https://drive.google.com/uc?id=${File_ID}` },
 		};
 	} catch (error) {
 		console.log(error);

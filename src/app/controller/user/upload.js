@@ -1,4 +1,4 @@
-const { uploadId, getIdPic } = require('../../service/user/upload');
+const { uploadId, getIdFile } = require('../../service/user/upload');
 const { Success } = require('../../../utils/response/success/successes');
 const {
 	InternalServerError,
@@ -31,7 +31,7 @@ module.exports.uploadId = async (req, res, next) => {
 
 module.exports.getIDFile = async (req, res, next) => {
 	try {
-		const { code, message, data } = await getIdPic(req.user._id);
+		const { code, message, data } = await getIdFile(req.user._id);
 		if (code === 0) {
 			return next(new Success(message, data));
 		}

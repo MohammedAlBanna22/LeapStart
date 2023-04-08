@@ -23,6 +23,9 @@ module.exports.verifyEmail = async (data) => {
 		if (!verifyUser) {
 			return { code: 2, message: 'user.InvalidCode' };
 		}
+		if (code !== verifyUser.code) {
+			return { code: 2, message: 'user.InvalidCode' };
+		}
 
 		await verifyUser.remove();
 

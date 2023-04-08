@@ -5,3 +5,28 @@
   3. we could add status and doc but i personally prefer getting them from the user ,to not duplicate data so populate
   4. time stamps
 **/
+const mongoose = require('mongoose');
+
+const requestSchema = new mongoose.Schema(
+	{
+		user: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+		},
+		type: {
+			type: String,
+			enum: ['user_ID', 'expert_verify'],
+		},
+		status: {
+			type: String,
+			enum: ['created', 'updated', 'cancelled'],
+			default: 'created',
+		},
+		isDeleted: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	{ timestamps: true }
+);
+module.exports = mongoose.model('Request', requestSchema);

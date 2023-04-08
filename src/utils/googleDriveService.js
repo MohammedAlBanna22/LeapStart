@@ -65,6 +65,16 @@ class GoogleDriveService {
 			},
 		});
 	}
+	// async getFileById(fileId) {
+	// 	const response = await this.driveClient.files.get({
+	// 		fileId,
+	// 		fields: '	id, name, mimeType',
+	// 		alt:'media'
+	// 	},{
+	// 		responseType:'stream'
+	// 	});
+	// 	return response.data;
+	// }
 }
 
 /**

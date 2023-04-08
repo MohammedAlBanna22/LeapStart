@@ -16,24 +16,16 @@ module.exports.uploadId = async (data) => {
 		const { _id, file, idNumber, idDocumentType } = data;
 
 		const user = await Users.findOne({ _id, isDeleted: false });
-
 		if (!user) {
 			return { code: 1, message: 'user.notFoundUser' };
 		}
 
 		if (!file) return { code: 1, message: 'user.notFoundFile' };
-		//TODO: UPLOAD FILES TO THIRD PARTY SERVICE INSTED OF OUR SERVER
-
-		// const fileURL = await uploadFile(_id, 'ID_Files', file.mimetype, file.path);
-		// if (!fileURL) throw new Error('something went wrong');
-		// const fileURL = `host/uploads/file.path`;
 
 		const { originalname, mimetype, path } = file;
-		// console.log({ originalname, mimetype, path });
+
 		const folderName = 'userID';
-
 		let folder = await driveService.searchFolder(folderName);
-
 		if (!folder) {
 			folder = await driveService.createFolder(folderName);
 		}
@@ -51,15 +43,38 @@ module.exports.uploadId = async (data) => {
 			idNumber,
 			idFile: upFile.data.id,
 		};
+
 		await user.save({ sendIdRequest: true });
 
+		//delete file
 		fs.unlinkSync(file.path);
 
-		// deleteFile(file.path);
 		return {
 			code: 0,
 			message: 'File uploaded successfully',
 			data: { fileId: upFile.data.id, user },
+		};
+	} catch (error) {
+		console.log(error);
+		throw new Error(error);
+	}
+};
+
+module.exports.getIdFile = async (_id) => {
+	try {
+		const user = await Users.findOne({ _id, isDeleted: false });
+		if (!user) {
+			return { code: 1, message: 'user not found', data: null };
+		}
+		// const file = await driveService.getFileById(user.verifiedId.idFile);
+		// if (!file) {
+		// 	return { code: 1, message: 'file not found', data: null };
+		// }
+		const File_ID = user.verifiedId.idFile;
+		return {
+			code: 0,
+			message: 'here is id file ',
+			data: { link: `https://drive.google.com/uc?id=${File_ID}` },
 		};
 	} catch (error) {
 		console.log(error);

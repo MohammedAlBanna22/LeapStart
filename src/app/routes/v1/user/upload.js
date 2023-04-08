@@ -16,4 +16,5 @@ router.post(
 
 	controller.uploadId
 );
+router.get('/getfile', isAuthenticated, controller.getIDFile);
 module.exports = router;

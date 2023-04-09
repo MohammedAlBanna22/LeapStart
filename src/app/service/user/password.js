@@ -6,6 +6,7 @@ const Verification = require('../../../model/verify');
 const jwt = require('../../../utils/jwt');
 const {
 	sendVerificationCodeEmail,
+	sendForgetPasswordCode,
 } = require('../../../utils/notifications/email');
 
 module.exports.forgotPassword = async (data) => {
@@ -35,7 +36,7 @@ module.exports.forgotPassword = async (data) => {
 		//   emailType: config.get('EMAIL_TYPES').RESET_PASSWORD,
 		// };verificationCode
 
-		await sendVerificationCodeEmail(user.email, code);
+		await sendForgetPasswordCode(user.email, code);
 		return {
 			code: 0,
 			message: 'commonSuccess.message',
@@ -50,7 +51,7 @@ module.exports.verifyPasswordCode = async (data) => {
 	const { verificationCode, _id } = data;
 	try {
 		const verification = await Verification.findOne({
-			verificationCode,
+			code: verificationCode,
 			userId: _id,
 		});
 

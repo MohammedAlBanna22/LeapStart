@@ -1,5 +1,5 @@
 /**
- * expert :
+ * expert :TODO:
  *  1. userID : ref to user
  *  2. hourRate : dollar per hour
  *  3. avaliable hours 0 booked hours => [] time at least up for the next 7
@@ -14,41 +14,44 @@
 
 const mongoose = require('mongoose');
 
-const expertSchema = new mongoose.Schema({
-	user: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
+const expertSchema = new mongoose.Schema(
+	{
+		user: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+		},
+		hourRate: {
+			type: Number,
+		},
+		availableHours: {
+			type: [Date],
+		},
+		expertRate: {
+			type: Number,
+		},
+		expertDocs: {
+			type: [String],
+		},
+		bio: {
+			type: String,
+		},
+		fields: {
+			type: [String],
+		},
+		bookedHours: {
+			type: [
+				{
+					startTime: { type: Date, required: true },
+					endTime: { type: Date, required: true },
+				},
+			],
+			default: [],
+		},
 	},
-	hourRate: {
-		type: Number,
-	},
-	availableHours: {
-		type: [Date],
-	},
-	expertRate: {
-		type: Number,
-	},
-	expertDocs: {
-		type: [String],
-	},
-	bio: {
-		type: String,
-	},
-	fields: {
-		type: [String],
-	},
-	bookedHours: {
-		type: [
-			{
-				startTime: { type: Date, required: true },
-				endTime: { type: Date, required: true },
-			},
-		],
-		default: [],
-	},
-});
+	{ timestamps: true }
+);
 
-const Expert = mongoose.model('Expert', expertSchema);
+const Expert = mongoose.model('expert', expertSchema);
 module.exports = Expert;
 
 //  ADD BOOKED HOURS BY THE FOLLOWING CODE

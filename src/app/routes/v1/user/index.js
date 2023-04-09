@@ -6,6 +6,9 @@ const isAuthenticated = require('../../../../utils/middleware/auth/auth');
 
 const router = express.Router();
 
+// TODO: upload profile pic
+// TODO: modify get user to get expertDetails as well if he's an expert
+
 router.post('/login', [login, validateRequest], controller.login);
 
 router.post('/', [signup, validateRequest], controller.signup);

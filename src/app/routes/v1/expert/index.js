@@ -1,6 +1,11 @@
 const express = require('express');
 const controller = require('../../../controller/expert');
-
+const upload = require('../../../../utils/multerUploader');
+const { reqExpert } = require('../../../validationSchema/expert');
+const { validateRequest } = require('../../../../utils/validation');
+const {
+	isAuthenticatedVerified,
+} = require('../../../../utils/middleware/auth');
 const router = express.Router();
 
 /**TODO:
@@ -16,6 +21,12 @@ const router = express.Router();
  * 7. notification to get the response to the verify req
  *
  */
-// router.post('/');
+router.post(
+	'/',
+	upload.array('files'),
+	isAuthenticatedVerified,
+	// [reqExpert, validateRequest],
+	controller.reqExpert
+);
 
 module.exports = router;

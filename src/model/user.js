@@ -67,6 +67,10 @@ const UserSchema = new mongoose.Schema(
 			type: Boolean,
 			default: false,
 		},
+		expertId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Expert',
+		},
 
 		isBlocked: {
 			type: Boolean,
@@ -89,7 +93,7 @@ const UserSchema = new mongoose.Schema(
 
 // hook to let team know when user add id file
 
-// user.save({idVerfiy:true})
+// user.save({idVerify:true})
 
 UserSchema.post('save', async function f(user, next) {
 	try {
@@ -111,6 +115,25 @@ UserSchema.post('save', async function f(user, next) {
 					user: user._id,
 					type: 'user_id',
 					title: 'ID Approval',
+					status: 'created',
+				});
+			} else {
+				request.status = 'updated';
+				await request.save();
+			}
+		}
+
+		if (isExpertRequest) {
+			const request = await Request.findOne({
+				user: user._id,
+				type: 'expert_verify',
+				isDeleted: false,
+			});
+			if (!request) {
+				await Request.create({
+					user: user._id,
+					type: 'expert_verify',
+					title: 'expert verify',
 					status: 'created',
 				});
 			} else {

@@ -1,7 +1,10 @@
 const express = require('express');
 const controller = require('../../../controller/expert');
+const isAuthenticated = require('../../../../utils/middleware/auth/auth');
 
 const router = express.Router();
+
+
 
 /**TODO:
  * in here we define the routes for experts from the side of the user (mainly)
@@ -17,5 +20,7 @@ const router = express.Router();
  *
  */
 // router.post('/');
+
+router.get('/getexperts', controller.getExperts);//isAuthenticated,
 
 module.exports = router;

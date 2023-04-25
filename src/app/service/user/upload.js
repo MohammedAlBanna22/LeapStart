@@ -1,4 +1,4 @@
-const config = require('config');
+// const config = require('config');W
 // const uploadFile = require('../../../utils/firebase/uploadFile');
 // const { deleteFile } = require('../../../utils/helpers');
 require('dotenv').config();

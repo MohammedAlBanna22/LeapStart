@@ -29,13 +29,22 @@ const expertSchema = new mongoose.Schema(
 		expertRate: {
 			type: Number,
 		},
+		status: {
+			type: String,
+			enum: ['pending', 'rejected', 'approved'],
+			default: 'pending',
+		},
+		disapproveReason: {
+			reason: { type: String },
+			note: { type: String },
+		},
 		expertDocs: {
 			type: [String],
 		},
 		bio: {
 			type: String,
 		},
-		fields: {
+		catagories: {
 			type: [String],
 		},
 		bookedHours: {

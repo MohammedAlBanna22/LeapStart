@@ -1,7 +1,12 @@
 const express = require('express');
 const controller = require('../../../controller/expert');
-const isAuthenticated = require('../../../../utils/middleware/auth/auth');
 
+const upload = require('../../../../utils/multerUploader');
+const { reqExpert } = require('../../../validationSchema/expert');
+const { validateRequest } = require('../../../../utils/validation');
+const {
+	isAuthenticatedVerified,
+} = require('../../../../utils/middleware/auth');
 const router = express.Router();
 
 
@@ -20,7 +25,14 @@ const router = express.Router();
  *
  */
 // router.post('/');
+router.get('/getexperts', controller.getExperts);//isAuthenticatedVerified,
+router.post(
+	'/',
+	upload.array('files'),
+	isAuthenticatedVerified,
+	// [reqExpert, validateRequest],
+	controller.reqExpert
+);
 
-router.get('/getexperts', controller.getExperts);//isAuthenticated,
 
 module.exports = router;

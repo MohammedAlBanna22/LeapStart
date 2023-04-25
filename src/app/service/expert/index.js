@@ -67,11 +67,16 @@ module.exports.reqExpert = async (req) => {
 		throw new Error(error);
 	}
 };
+
+
 module.exports.getallexperts = async (data) => {
 	try {
 		const {userId,offset, search, filter, sort, limit } = data; 
 
-   // console.log(userId,offset, search, filter, sort, limit );
+    //console.log(userId,offset, search, filter, sort, limit );
+
+   //var test= await Expert.findOne({name:"m"});
+   //console.log(test);
 	
 	//filter check it
 	let query = {};
@@ -79,64 +84,86 @@ module.exports.getallexperts = async (data) => {
       query.status = { $in: Array.isArray(filter) ? filter : [filter] };
     }
 
+
     const regex = new RegExp(search, "i");
-   // let expertsData = await Users.aggregate([
-		
-//make change of table
+    //console.log(regex);
+    
+//await
    let expertsData = await Expert.aggregate([
 
-      {
-        $lookup: {
-			
-          from: "experts",
-          localField: "_id",
-          foreignField: "user",
-          as: "experts",
-/*
-		  		from: "users",
-				localField: "user",
-				foreignField: "_id",
-				as: "user",
+   
+   
 
-*/
+      {
+        
+        $lookup: {
+
+		  	from:"users",
+				localField:"user",
+				foreignField:"_id",
+				as:"expert",
+
         },
       },
-
       
+        {
+        $unwind: {
+         path: "$expert",
+           preserveNullAndEmptyArrays: true,
+        },
+         },
+
+
+    
       {
-        $match: {
+
        
+
+
+
+
+        
+        $match: {
+       //  bio: "this that blue black" , 
+        //  status: 'pending',
+       // name:"m",
           $or: [
-			
-            { "experts.hourRate": regex },
-			{ "experts.availableHours": regex },
-			{ "experts.expertRate": regex },
-			{ "experts.fields": regex },
-           { name: regex },
-		   {email:regex},
-		   {phone:regex},
-		   {isDeleted:regex},//NOT WORK
-		  // {role:regex},//not need 
-
-		  
-		   
-
-/*
+       
 		  { hourRate: regex },
 		  { availableHours: regex },
 		  { expertRate: regex },
 		  { fields: regex },
-		 {"user.name": regex },
-		 {"user.email":regex},
-		 {"user.phone":regex},
-		 {"user.isDeleted":regex},//NOT WORK
-		// {role:regex},//not need 
-        
-
- */         
+      { bio: regex },
+      { status: regex },
+      
+    
+		//  {"user.name": regex },
+		 // {"user.email":regex},
+		 // {"user.phone":regex},
+       
           ],
         },
       },
+
+/*
+      {
+        $project:{
+          createdAt:1,
+        //  bio:1,
+         // fields:1,
+        // status:1,
+        
+          user: {
+            _id:1,
+            name:1,
+           
+          },
+
+        }
+      },
+      */
+     
+
    //how to call it (data)  
    //    {
      //    $sort: {sort},
@@ -146,8 +173,15 @@ module.exports.getallexperts = async (data) => {
        },
        {
          $limit: parseInt(limit),
-       }
-    ]);
+       },
+      
+    ]);//.exec()
+
+
+    
+			
+
+    //$project to make custom filed apper 1  disaper 0
 	console.log(expertsData);
     if (!expertsData) {
       return { code: 1, message: "Expert not found ", data: null };
@@ -162,6 +196,12 @@ module.exports.getallexperts = async (data) => {
     throw new Error(error);
   }
 };
+
+
+
+
+
+
 /*
 let expertsData = await experts.aggregate([
 	from: "user",
@@ -182,4 +222,53 @@ let expertsData = await experts.aggregate([
 		  // {role:regex},//not need 
 
 
+
+      
+	/*		
+          from: "experts",
+          localField: "_id",
+          foreignField: "user",
+          as: "experts",
 */
+	/*
+            { "experts.hourRate": regex },
+			{ "experts.availableHours": regex },
+			{ "experts.expertRate": regex },
+			{ "experts.fields": regex },
+           { name: regex },
+		   {email:regex},
+		   {phone:regex},
+		   {isDeleted:regex},//NOT WORK
+		  // {role:regex},//not need 
+
+
+        // let expertsData = await Users.aggregate([
+		
+//make change of table
+
+
+
+
+
+
+ $match: {
+       
+          $or: [
+		
+           { name: regex },
+		   {email:regex},
+		   {phone:regex},
+		   {isDeleted:regex},//NOT WORK
+		  // {role:regex},//not need 
+
+
+
+
+
+
+
+
+
+		*/ 
+
+

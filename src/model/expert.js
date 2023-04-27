@@ -13,7 +13,7 @@
  */
 
 const mongoose = require('mongoose');
-
+const User = require('./user');
 const expertSchema = new mongoose.Schema(
 	{
 		user: {
@@ -60,7 +60,7 @@ const expertSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-const Expert = mongoose.model('expert', expertSchema);
+const Expert = mongoose.model('Expert', expertSchema);
 module.exports = Expert;
 
 //  ADD BOOKED HOURS BY THE FOLLOWING CODE

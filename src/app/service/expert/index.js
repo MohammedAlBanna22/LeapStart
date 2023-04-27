@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Users, Expert } = require('../../../model');
+const { User, Expert } = require('../../../model');
 const { GoogleDriveService } = require('../../../utils/googleDriveService');
 const fs = require('fs');
 
@@ -19,7 +19,7 @@ module.exports.reqExpert = async (req) => {
 
 		// console.log(fields);
 
-		const user = await Users.findOne({ _id, isDeleted: false });
+		const user = await User.findOne({ _id, isDeleted: false });
 		if (!user) {
 			return { code: 1, message: 'user.notFoundUser' };
 		}
@@ -64,6 +64,21 @@ module.exports.reqExpert = async (req) => {
 		return { code: 0, message: 'success', data: { expert, user } };
 	} catch (error) {
 		console.log(error);
+		throw new Error(error);
+	}
+};
+
+module.exports.getExpert = async (expertId) => {
+	try {
+		const expert = await Expert.findOne({
+			_id: expertId,
+			isDeleted: false,
+		}).populate('user');
+		if (!expert) {
+			return { code: 1, message: 'Expert not found', data: null };
+		}
+		return { code: 0, message: `expert is ${expert.status}`, data: expert };
+	} catch (error) {
 		throw new Error(error);
 	}
 };

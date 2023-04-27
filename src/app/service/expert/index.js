@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Users, Expert } = require('../../../model');
+const { User, Expert } = require('../../../model');
 const { GoogleDriveService } = require('../../../utils/googleDriveService');
 const fs = require('fs');
 
@@ -14,12 +14,12 @@ module.exports.reqExpert = async (req) => {
 		const {
 			files: files,
 			user: { _id },
-			body: { bio, catagories },
+			body: { bio, catagories }, // should all initial values needed for expert to function as well like(hourRate & and initial working hours ) knowing that expert can update them after
 		} = req;
 
 		// console.log(fields);
 
-		const user = await Users.findOne({ _id, isDeleted: false });
+		const user = await User.findOne({ _id, isDeleted: false });
 		if (!user) {
 			return { code: 1, message: 'user.notFoundUser' };
 		}
@@ -271,4 +271,20 @@ let expertsData = await experts.aggregate([
 
 		*/ 
 
+
+//// TODO: look here
+module.exports.getExpert = async (expertId) => {
+	try {
+		const expert = await Expert.findOne({
+			_id: expertId,
+			isDeleted: false,
+		}).populate('user');
+		if (!expert) {
+			return { code: 1, message: 'Expert not found', data: null };
+		}
+		return { code: 0, message: `expert is ${expert.status}`, data: expert };
+	} catch (error) {
+		throw new Error(error);
+	}
+};
 

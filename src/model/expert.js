@@ -2,18 +2,18 @@
  * expert :TODO:
  *  1. userID : ref to user
  *  2. hourRate : dollar per hour
- *  3. avaliable hours 0 booked hours => [] time at least up for the next 7
- *      days or the time the user identifed // update it some how
+ *  3. available hours 0 booked hours => [] time at least up for the next 7
+ *      days or the time the user identified // update it some how
  *      ==> into a diff  module
  *  4. expert rate : ==> the level of the expert //forget for now
  *  5. expert docs ==> cv old work
  *  6. bio
- *  7. fileds /tags ==> in user // as experties
+ *  7. fields /tags ==> in user // as expertise
  *  8.
  */
 
 const mongoose = require('mongoose');
-
+const User = require('./user');
 const expertSchema = new mongoose.Schema(
 	{
 		user: {
@@ -60,7 +60,7 @@ const expertSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-const Expert = mongoose.model('expert', expertSchema);
+const Expert = mongoose.model('Expert', expertSchema);
 module.exports = Expert;
 
 //  ADD BOOKED HOURS BY THE FOLLOWING CODE

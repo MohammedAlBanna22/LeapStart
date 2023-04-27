@@ -1,4 +1,4 @@
-const { Users, Verification } = require('../../../model');
+const { User, Verification, Expert } = require('../../../model');
 const {
 	sendVerificationCodeEmail,
 } = require('../../../utils/notifications/email');
@@ -9,11 +9,11 @@ module.exports.signup = async (data) => {
 		const { name, email, password, country, phone } = data;
 
 		const { SALT } = process.env;
-		const isUsedEmail = await Users.findOne({ email, isDeleted: false });
+		const isUsedEmail = await User.findOne({ email, isDeleted: false });
 		if (isUsedEmail) {
 			return { code: 2, message: 'user.usedEmail', data: null };
 		}
-		const isUsedPhone = await Users.findOne({ phone, isDeleted: false });
+		const isUsedPhone = await User.findOne({ phone, isDeleted: false });
 		if (isUsedPhone) {
 			return { code: 2, message: 'user.usedMobile' };
 		}
@@ -21,7 +21,7 @@ module.exports.signup = async (data) => {
 		const salt = await bcrypt.genSalt(Number(SALT));
 		const hashedPassword = await bcrypt.hash(password, salt);
 
-		const user = await Users.create({
+		const user = await User.create({
 			name,
 			email,
 			phone,
@@ -51,7 +51,7 @@ module.exports.login = async (data) => {
 	try {
 		const { email, password } = data;
 
-		const user = await Users.findOne({ email, isDeleted: false });
+		const user = await User.findOne({ email, isDeleted: false });
 
 		if (!user) {
 			return { code: 2, message: 'user.incorrectIdORPassword', data: null };
@@ -87,7 +87,7 @@ module.exports.login = async (data) => {
 module.exports.sendCodeToEmail = async (data) => {
 	const { _id } = data;
 	try {
-		const user = await Users.findOne({ _id, isDeleted: false });
+		const user = await User.findOne({ _id, isDeleted: false });
 		if (!user) {
 			return { code: 1, message: 'user.notFoundUser', data: null };
 		}
@@ -130,7 +130,9 @@ module.exports.sendCodeToEmail = async (data) => {
 module.exports.getUserById = async (data) => {
 	try {
 		const _id = data;
-		const user = await Users.findOne({ _id, isDeleted: false });
+		const user = await User.findOne({ _id, isDeleted: false }).populate(
+			'expertId'
+		);
 		if (!user) {
 			return { code: 2, message: 'userNotfound', data: null };
 		}
@@ -147,7 +149,7 @@ module.exports.getUserById = async (data) => {
 module.exports.deleteUserInfo = async (data) => {
 	try {
 		const { _id } = data;
-		const user = await Users.findOne({
+		const user = await User.findOne({
 			_id: _id,
 			isDeleted: false,
 		});

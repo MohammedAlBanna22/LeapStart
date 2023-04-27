@@ -145,5 +145,5 @@ UserSchema.post('save', async function f(user, next) {
 		return next(error);
 	}
 });
-const User = mongoose.model('user', UserSchema);
+const User = mongoose.model('User', UserSchema);
 module.exports = User;

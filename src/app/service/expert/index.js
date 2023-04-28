@@ -14,7 +14,7 @@ module.exports.reqExpert = async (req) => {
 		const {
 			files: files,
 			user: { _id },
-			body: { bio, catagories },
+			body: { bio, catagories }, // should all initial values needed for expert to function as well like(hourRate & and initial working hours ) knowing that expert can update them after
 		} = req;
 
 		// console.log(fields);

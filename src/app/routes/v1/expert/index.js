@@ -32,7 +32,9 @@ const router = express.Router();
  * 6. notification to get the response to the verify req ==>  later when we
  *		make notification
  */
-// router.get('/getexperts', controller.getExperts); //isAuthenticatedVerified,
+
+// TODO: ARGENT solve the repetition in expert
+router.get('/', controller.getExperts); //isAuthenticatedVerified,
 
 router.post(
 	'/',

@@ -68,7 +68,7 @@ module.exports.reqExpert = async (req) => {
 	}
 };
 
-module.exports.getallexperts = async (data) => {
+module.exports.getAllExperts = async (data) => {
 	try {
 		const { userId, offset, search, filter, sort, limit } = data;
 

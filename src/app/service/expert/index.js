@@ -68,84 +68,63 @@ module.exports.reqExpert = async (req) => {
 	}
 };
 
-
 module.exports.getallexperts = async (data) => {
 	try {
-		const {userId,offset, search, filter, sort, limit } = data; 
+		const { userId, offset, search, filter, sort, limit } = data;
 
-    //console.log(userId,offset, search, filter, sort, limit );
+		//console.log(userId,offset, search, filter, sort, limit );
 
-   //var test= await Expert.findOne({name:"m"});
-   //console.log(test);
-	
-	//filter check it
-	let query = {};
-   if (filter) {
-      query.status = { $in: Array.isArray(filter) ? filter : [filter] };
-    }
+		//var test= await Expert.findOne({name:"m"});
+		//console.log(test);
 
+		//filter check it
+		let query = {};
+		if (filter) {
+			query.status = { $in: Array.isArray(filter) ? filter : [filter] };
+		}
 
-    const regex = new RegExp(search, "i");
-    //console.log(regex);
-    
-//await
-   let expertsData = await Expert.aggregate([
+		const regex = new RegExp(search, 'i');
+		//console.log(regex);
 
-   
-   
+		//await
+		let expertsData = await Expert.aggregate([
+			{
+				$lookup: {
+					from: 'users',
+					localField: 'user',
+					foreignField: '_id',
+					as: 'expert',
+				},
+			},
 
-      {
-        
-        $lookup: {
+			{
+				$unwind: {
+					path: '$expert',
+					preserveNullAndEmptyArrays: true,
+				},
+			},
 
-		  	from:"users",
-				localField:"user",
-				foreignField:"_id",
-				as:"expert",
+			{
+				$match: {
+					//  bio: "this that blue black" ,
+					//  status: 'pending',
+					// name:"m",
+					$or: [
+						{ hourRate: regex },
+						{ availableHours: regex },
+						{ expertRate: regex },
+						{ fields: regex },
+						{ bio: regex },
+						{ status: regex },
 
-        },
-      },
-      
-        {
-        $unwind: {
-         path: "$expert",
-           preserveNullAndEmptyArrays: true,
-        },
-         },
+						//  {"user.name": regex },
+						// {"user.email":regex},
+						// {"user.phone":regex},
+					],
+				},
+			},
 
-
-    
-      {
-
-       
-
-
-
-
-        
-        $match: {
-       //  bio: "this that blue black" , 
-        //  status: 'pending',
-       // name:"m",
-          $or: [
-       
-		  { hourRate: regex },
-		  { availableHours: regex },
-		  { expertRate: regex },
-		  { fields: regex },
-      { bio: regex },
-      { status: regex },
-      
-    
-		//  {"user.name": regex },
-		 // {"user.email":regex},
-		 // {"user.phone":regex},
-       
-          ],
-        },
-      },
-
-/*
+			/*
       {
         $project:{
           createdAt:1,
@@ -162,45 +141,34 @@ module.exports.getallexperts = async (data) => {
         }
       },
       */
-     
 
-   //how to call it (data)  
-   //    {
-     //    $sort: {sort},
-     //  },
-       {
-        $skip: parseInt (offset),
-       },
-       {
-         $limit: parseInt(limit),
-       },
-      
-    ]);//.exec()
+			//how to call it (data)
+			//    {
+			//    $sort: {sort},
+			//  },
+			{
+				$skip: parseInt(offset),
+			},
+			{
+				$limit: parseInt(limit),
+			},
+		]); //.exec()
 
-
-    
-			
-
-    //$project to make custom filed apper 1  disaper 0
-	console.log(expertsData);
-    if (!expertsData) {
-      return { code: 1, message: "Expert not found ", data: null };
-    }
-    return {
-      code: 0,
-      message: "Experts info",
-      data: { expertsData },
-    };
-  } catch (error) {
-    console.log(error);
-    throw new Error(error);
-  }
+		//$project to make custom filed apper 1  disaper 0
+		console.log(expertsData);
+		if (!expertsData) {
+			return { code: 1, message: 'Expert not found ', data: null };
+		}
+		return {
+			code: 0,
+			message: 'Experts info',
+			data: { expertsData },
+		};
+	} catch (error) {
+		console.log(error);
+		throw new Error(error);
+	}
 };
-
-
-
-
-
 
 /*
 let expertsData = await experts.aggregate([
@@ -230,7 +198,7 @@ let expertsData = await experts.aggregate([
           foreignField: "user",
           as: "experts",
 */
-	/*
+/*
             { "experts.hourRate": regex },
 			{ "experts.availableHours": regex },
 			{ "experts.expertRate": regex },
@@ -269,10 +237,8 @@ let expertsData = await experts.aggregate([
 
 
 
-		*/ 
+		*/
 
-
-//// TODO: look here
 module.exports.getExpert = async (expertId) => {
 	try {
 		const expert = await Expert.findOne({
@@ -287,4 +253,3 @@ module.exports.getExpert = async (expertId) => {
 		throw new Error(error);
 	}
 };
-

@@ -9,8 +9,6 @@ const {
 } = require('../../../../utils/middleware/auth');
 const router = express.Router();
 
-
-
 /**TODO:
  * in here we define the routes for experts
  * the routes we gonna create :
@@ -34,8 +32,7 @@ const router = express.Router();
  * 6. notification to get the response to the verify req ==>  later when we
  *		make notification
  */
-router.get('/getexperts', controller.getExperts);//isAuthenticatedVerified,
-
+// router.get('/getexperts', controller.getExperts); //isAuthenticatedVerified,
 
 router.post(
 	'/',
@@ -45,8 +42,6 @@ router.post(
 	controller.reqExpert
 );
 
-
 router.get('/:id', isAuthenticatedVerified, controller.getExpert);
-
 
 module.exports = router;

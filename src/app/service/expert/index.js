@@ -19,7 +19,8 @@ module.exports.reqExpert = async (req) => {
 
 		// console.log(fields);
 
-		const user = await User.findOne({ _id, isDeleted: false });
+		const user = await User.findOne({ _id, isDeleted: false, isExpert: false });
+
 		if (!user) {
 			return { code: 1, message: 'user.notFoundUser' };
 		}
@@ -46,16 +47,27 @@ module.exports.reqExpert = async (req) => {
 		);
 
 		const expertDocs = upFiles.map((upFile) => upFile.data.id);
-
-		const expert = await Expert.create({
-			user: _id,
-			bio,
-			expertDocs,
-			status: 'pending',
-			catagories,
-		});
-
-		user.expertId = expert._id;
+		let expert;
+		if (user.expertId) {
+			expert = await Expert.findOne({ _id: user.expertId });
+			expert.bio = bio;
+			console.log(expert.expertDocs);
+			expert.expertDocs = expertDocs;
+			expert.status = 'pending';
+			expert.catagories = catagories;
+			await expert.save();
+			// await user.populate('expertId');
+			// console.log(user);
+		} else {
+			expert = await Expert.create({
+				user: _id,
+				bio,
+				expertDocs,
+				status: 'pending',
+				catagories,
+			});
+			user.expertId = expert._id;
+		}
 		await user.save({ sendExpertRequest: true });
 
 		//delete files after upload
@@ -70,57 +82,63 @@ module.exports.reqExpert = async (req) => {
 
 module.exports.getAllExperts = async (data) => {
 	try {
-		const { userId, offset, search, filter, sort, limit } = data;
+		// filter by categorize
+		let { search, filter, sort, offset, limit } = data;
 
-		//console.log(userId,offset, search, filter, sort, limit );
+		limit = limit ? parseInt(limit) : 10;
+		offset = offset ? parseInt(offset) : 0;
 
-		//var test= await Expert.findOne({name:"m"});
-		//console.log(test);
+		/* to handle sort input */
+		//
+		if (sort && sort[0] == '-') {
+			sort = { [sort.slice(1)]: -1 };
+		} else if (sort) {
+			sort = { [sort]: 1 };
+		} else sort = { createdAt: -1 };
 
-		//filter check it
-		let query = {};
+		let query = {
+			'user.isDeleted': false,
+			'user.isBlocked': false,
+		};
+
 		if (filter) {
 			query.status = { $in: Array.isArray(filter) ? filter : [filter] };
 		}
 
-		const regex = new RegExp(search, 'i');
-		//console.log(regex);
-
-		//await
-		let expertsData = await Expert.aggregate([
+		if (search) {
+			const regex = new RegExp(search, 'i');
+			query.$or = [
+				{ hourRate: regex },
+				{ availableHours: regex },
+				{ expertRate: regex },
+				{ fields: regex },
+				{ bio: regex },
+				{ status: regex },
+				{ 'user.name': regex },
+				{ 'user.email': regex },
+				{ 'user.phone': regex },
+			];
+		}
+		// console.log(query);
+		let experts = await Expert.aggregate([
 			{
 				$lookup: {
 					from: 'users',
 					localField: 'user',
 					foreignField: '_id',
-					as: 'expert',
+					as: 'user',
 				},
 			},
-
 			{
 				$unwind: {
-					path: '$expert',
+					path: '$user',
 					preserveNullAndEmptyArrays: true,
 				},
 			},
 
 			{
 				$match: {
-					//  bio: "this that blue black" ,
-					//  status: 'pending',
-					// name:"m",
-					$or: [
-						{ hourRate: regex },
-						{ availableHours: regex },
-						{ expertRate: regex },
-						{ fields: regex },
-						{ bio: regex },
-						{ status: regex },
-
-						//  {"user.name": regex },
-						// {"user.email":regex},
-						// {"user.phone":regex},
-					],
+					...query,
 				},
 			},
 
@@ -143,101 +161,51 @@ module.exports.getAllExperts = async (data) => {
       */
 
 			//how to call it (data)
-			//    {
-			//    $sort: {sort},
-			//  },
+
+			{
+				$sort: sort,
+			},
 			{
 				$skip: parseInt(offset),
 			},
 			{
 				$limit: parseInt(limit),
 			},
-		]); //.exec()
+		]);
 
-		//$project to make custom filed apper 1  disaper 0
-		console.log(expertsData);
-		if (!expertsData) {
+		const count = await Expert.aggregate([
+			{
+				$lookup: {
+					from: 'users',
+					localField: 'user',
+					foreignField: '_id',
+					as: 'user',
+				},
+			},
+			{
+				$unwind: {
+					path: '$user',
+					preserveNullAndEmptyArrays: true,
+				},
+			},
+			{ $match: { ...query } },
+			{ $count: 'count' },
+		]);
+
+		// console.log(experts);
+		if (!experts) {
 			return { code: 1, message: 'Expert not found ', data: null };
 		}
 		return {
 			code: 0,
 			message: 'Experts info',
-			data: { expertsData },
+			data: { count, experts },
 		};
 	} catch (error) {
 		console.log(error);
 		throw new Error(error);
 	}
 };
-
-/*
-let expertsData = await experts.aggregate([
-	from: "user",
-	localField: "user",
-	foreignField: "_id",
-	as: "user",
-
-
-
-	{ hourRate: regex },
-			{ availableHours: regex },
-			{ expertRate: regex },
-			{ fields: regex },
-           { "user.name": regex },
-		   {"user.email":regex},
-		   {"user.phone":regex},
-		   {"user.isDeleted":regex},//NOT WORK
-		  // {role:regex},//not need 
-
-
-
-      
-	/*		
-          from: "experts",
-          localField: "_id",
-          foreignField: "user",
-          as: "experts",
-*/
-/*
-            { "experts.hourRate": regex },
-			{ "experts.availableHours": regex },
-			{ "experts.expertRate": regex },
-			{ "experts.fields": regex },
-           { name: regex },
-		   {email:regex},
-		   {phone:regex},
-		   {isDeleted:regex},//NOT WORK
-		  // {role:regex},//not need 
-
-
-        // let expertsData = await Users.aggregate([
-		
-//make change of table
-
-
-
-
-
-
- $match: {
-       
-          $or: [
-		
-           { name: regex },
-		   {email:regex},
-		   {phone:regex},
-		   {isDeleted:regex},//NOT WORK
-		  // {role:regex},//not need 
-
-
-
-
-
-
-
-
-
-		*/
 
 module.exports.getExpert = async (expertId) => {
 	try {

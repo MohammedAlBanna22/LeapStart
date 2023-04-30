@@ -1,4 +1,6 @@
 const fs = require('fs');
+require('dotenv').config();
+
 const { google } = require('googleapis');
 
 class GoogleDriveService {
@@ -75,7 +77,15 @@ class GoogleDriveService {
 	}
 }
 
+const driveService = new GoogleDriveService(
+	process.env.GOOGLE_DRIVE_CLIENT_ID,
+	process.env.GOOGLE_DRIVE_CLIENT_SECRET,
+	process.env.GOOGLE_DRIVE_REDIRECT_URI,
+	process.env.GOOGLE_DRIVE_REFRESH_TOKEN
+);
+
 /**
  * @type {{GoogleDriveService : GoogleDriveService}}
  */
 module.exports.GoogleDriveService = GoogleDriveService;
+module.exports.driveService = driveService;

@@ -4,6 +4,7 @@ const {
 } = require('../../../utils/notifications/email');
 const jwt = require('../../../utils/jwt');
 const bcrypt = require('bcrypt');
+const { getUser } = require('../../../responseModel/user');
 module.exports.signup = async (data) => {
 	try {
 		const { name, email, password, country, phone } = data;
@@ -40,7 +41,7 @@ module.exports.signup = async (data) => {
 		return {
 			code: 0,
 			message: 'commonSuccess.message',
-			data: { accessToken, refreshToken, user },
+			data: { accessToken, refreshToken, user: getUser(user) },
 		};
 	} catch (error) {
 		throw new Error(error);
@@ -76,7 +77,7 @@ module.exports.login = async (data) => {
 		return {
 			code: 0,
 			message: 'commonSuccess.message',
-			data: { accessToken, refreshToken, user },
+			data: { accessToken, refreshToken, user: getUser(user) },
 		};
 	} catch (error) {
 		console.log(error);
@@ -136,10 +137,11 @@ module.exports.getUserById = async (data) => {
 		if (!user) {
 			return { code: 2, message: 'userNotfound', data: null };
 		}
+
 		return {
 			code: 0,
 			message: 'user info',
-			data: { user },
+			data: { user: getUser(user) },
 		};
 	} catch (error) {
 		throw new Error(error);

@@ -1,14 +1,9 @@
 require('dotenv').config();
 const { User, Expert } = require('../../../model');
-const { GoogleDriveService } = require('../../../utils/googleDriveService');
+const { getUser } = require('../../../responseModel/user');
+const { driveService } = require('../../../utils/googleDriveService');
 const fs = require('fs');
 
-const driveService = new GoogleDriveService(
-	process.env.GOOGLE_DRIVE_CLIENT_ID,
-	process.env.GOOGLE_DRIVE_CLIENT_SECRET,
-	process.env.GOOGLE_DRIVE_REDIRECT_URI,
-	process.env.GOOGLE_DRIVE_REFRESH_TOKEN
-);
 module.exports.reqExpert = async (req) => {
 	try {
 		const {
@@ -16,8 +11,6 @@ module.exports.reqExpert = async (req) => {
 			user: { _id },
 			body: { bio, catagories }, // should all initial values needed for expert to function as well like(hourRate & and initial working hours ) knowing that expert can update them after
 		} = req;
-
-		// console.log(fields);
 
 		const user = await User.findOne({ _id, isDeleted: false, isExpert: false });
 
@@ -51,7 +44,6 @@ module.exports.reqExpert = async (req) => {
 		if (user.expertId) {
 			expert = await Expert.findOne({ _id: user.expertId });
 			expert.bio = bio;
-			console.log(expert.expertDocs);
 			expert.expertDocs = expertDocs;
 			expert.status = 'pending';
 			expert.catagories = catagories;
@@ -73,7 +65,11 @@ module.exports.reqExpert = async (req) => {
 		//delete files after upload
 		files.map((file) => fs.unlinkSync(file.path));
 
-		return { code: 0, message: 'success', data: { expert, user } };
+		return {
+			code: 0,
+			message: 'success',
+			data: { expert, user: getUser(user) },
+		};
 	} catch (error) {
 		console.log(error);
 		throw new Error(error);
@@ -142,25 +138,14 @@ module.exports.getAllExperts = async (data) => {
 				},
 			},
 
-			/*
-      {
-        $project:{
-          createdAt:1,
-        //  bio:1,
-         // fields:1,
-        // status:1,
-        
-          user: {
-            _id:1,
-            name:1,
-           
-          },
-
-        }
-      },
-      */
-
-			//how to call it (data)
+			{
+				$project: {
+					user: {
+						password: 0,
+						expertId: 0,
+					},
+				},
+			},
 
 			{
 				$sort: sort,

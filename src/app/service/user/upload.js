@@ -1,16 +1,11 @@
 // const config = require('config');W
 // const uploadFile = require('../../../utils/firebase/uploadFile');
 // const { deleteFile } = require('../../../utils/helpers');
-require('dotenv').config();
+
 const { User } = require('../../../model');
-const { GoogleDriveService } = require('../../../utils/googleDriveService');
+const { driveService } = require('../../../utils/googleDriveService');
 const fs = require('fs');
-const driveService = new GoogleDriveService(
-	process.env.GOOGLE_DRIVE_CLIENT_ID,
-	process.env.GOOGLE_DRIVE_CLIENT_SECRET,
-	process.env.GOOGLE_DRIVE_REDIRECT_URI,
-	process.env.GOOGLE_DRIVE_REFRESH_TOKEN
-);
+
 module.exports.uploadId = async (data) => {
 	try {
 		const { _id, file, idNumber, idDocumentType } = data;
@@ -52,7 +47,7 @@ module.exports.uploadId = async (data) => {
 		return {
 			code: 0,
 			message: 'File uploaded successfully',
-			data: { fileId: upFile.data.id, user },
+			data: { user },
 		};
 	} catch (error) {
 		console.log(error);

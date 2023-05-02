@@ -4,7 +4,12 @@ const {
 } = require('../../../utils/response/error/errors');
 const { Success } = require('../../../utils/response/success/successes');
 
-const { reqExpert, getExpert, getAllExperts,editUserProfile } = require('../../service/expert');
+const {
+	reqExpert,
+	getExpert,
+	getAllExperts,
+	editUserProfile,
+} = require('../../service/expert');
 
 module.exports.reqExpert = async (req, res, next) => {
 	try {
@@ -46,8 +51,6 @@ module.exports.getExpert = async (req, res, next) => {
 		return next(new InternalServerError(error));
 	}
 };
-
-
 module.exports.editProfile = async (req, res, next) => {
 	try {
 		//id from req.user or parms  req.user._id ??
@@ -63,6 +66,3 @@ module.exports.editProfile = async (req, res, next) => {
 		return next(new InternalServerError(error));
 	}
 };
-
-
-

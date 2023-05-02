@@ -20,7 +20,7 @@ const expertSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
 		},
-		hourRate: {
+		hourlyRate: {
 			type: Number,
 		},
 		availableHours: {

@@ -9,7 +9,7 @@ module.exports.reqExpert = async (req) => {
 		const {
 			files: files,
 			user: { _id },
-			body: { bio, catagories }, // should all initial values needed for expert to function as well like(hourRate & and initial working hours ) knowing that expert can update them after
+			body: { bio, catagories, hourlyRate }, // should all initial values needed for expert to function as well like(hourRate & and initial working hours ) knowing that expert can update them after
 		} = req;
 
 		const user = await User.findOne({ _id, isDeleted: false, isExpert: false });
@@ -47,6 +47,7 @@ module.exports.reqExpert = async (req) => {
 			expert.expertDocs = expertDocs;
 			expert.status = 'pending';
 			expert.catagories = catagories;
+			expert.hourlyRate = hourlyRate;
 			await expert.save();
 			// await user.populate('expertId');
 			// console.log(user);
@@ -57,6 +58,7 @@ module.exports.reqExpert = async (req) => {
 				expertDocs,
 				status: 'pending',
 				catagories,
+				hourlyRate,
 			});
 			user.expertId = expert._id;
 		}

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { User, Expert } = require('../../../model');//Users not work 
+const { User, Expert } = require('../../../model');
 const { getUser } = require('../../../responseModel/user');
 const { driveService } = require('../../../utils/googleDriveService');
 const fs = require('fs');

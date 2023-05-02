@@ -208,3 +208,35 @@ module.exports.getExpert = async (expertId) => {
 		throw new Error(error);
 	}
 };
+
+module.exports.editUserProfile = async (id, data) => {
+	try {
+		const { name, country, phone, email } = data;
+		console.log(id);
+		console.log(name, country, phone, email);
+		const user = await User.findOneAndUpdate(
+			{ _id: id },
+			{
+				$set: {
+					name: name,
+					country: country,
+					phone: phone,
+					email: email,
+				},
+			},
+			{ new: true }
+		);
+		if (!user) {
+			return { code: 2, message: 'nothing to found', data: null };
+		}
+
+		return {
+			code: 0,
+			message: 'User Update succsessfully ',
+			data: { user },
+		};
+	} catch (error) {
+		console.log(error);
+		throw new Error(error);
+	}
+};

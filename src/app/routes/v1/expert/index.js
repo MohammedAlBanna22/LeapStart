@@ -46,4 +46,6 @@ router.post(
 
 router.get('/:id', isAuthenticatedVerified, controller.getExpert);
 
+router.put('/editProfile/:_id', controller.editProfile); //edit //isAuthenticatedVerified,
+
 module.exports = router;

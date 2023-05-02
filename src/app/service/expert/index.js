@@ -14,7 +14,7 @@ module.exports.reqExpert = async (req) => {
 		const {
 			files: files,
 			user: { _id },
-			body: { bio, catagories },
+			body: { bio, catagories, hourlyRate }, // should all initial values needed for expert to function as well like(hourRate & and initial working hours ) knowing that expert can update them after
 		} = req;
 
 		// console.log(fields);
@@ -47,15 +47,29 @@ module.exports.reqExpert = async (req) => {
 
 		const expertDocs = upFiles.map((upFile) => upFile.data.id);
 
-		const expert = await Expert.create({
-			user: _id,
-			bio,
-			expertDocs,
-			status: 'pending',
-			catagories,
-		});
+		let expert;
+		if (user.expertId) {
+			expert = await Expert.findOne({ _id: user.expertId });
+			expert.bio = bio;
+			expert.expertDocs = expertDocs;
+			expert.status = 'pending';
+			expert.catagories = catagories;
+			expert.hourlyRate = hourlyRate;
+			await expert.save();
+			// await user.populate('expertId');
+			// console.log(user);
+		} else {
+			expert = await Expert.create({
+				user: _id,
+				bio,
+				expertDocs,
+				status: 'pending',
+				catagories,
+				hourlyRate,
+			});
+			user.expertId = expert._id;
+		}
 
-		user.expertId = expert._id;
 		await user.save({ sendExpertRequest: true });
 
 		//delete files after upload

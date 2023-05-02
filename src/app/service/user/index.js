@@ -5,6 +5,7 @@ const {
 const jwt = require('../../../utils/jwt');
 const bcrypt = require('bcrypt');
 const { getUser } = require('../../../responseModel/user');
+const mongoose = require('mongoose');
 module.exports.signup = async (data) => {
 	try {
 		const { name, email, password, country, phone } = data;
@@ -131,9 +132,59 @@ module.exports.sendCodeToEmail = async (data) => {
 module.exports.getUserById = async (data) => {
 	try {
 		const _id = data;
-		const user = await User.findOne({ _id, isDeleted: false }).populate(
-			'expertId'
-		);
+		// const user = await User.findOne({ _id, isDeleted: false }).populate(
+		// 	'expertId'
+		// );
+		const user = await User.aggregate([
+			{
+				$lookup: {
+					from: 'experts',
+					localField: 'expertId',
+					foreignField: '_id',
+					as: 'expert',
+				},
+			},
+			{
+				$unwind: {
+					path: '$expert',
+					preserveNullAndEmptyArrays: true,
+				},
+			},
+			{
+				$match: {
+					_id: mongoose.Types.ObjectId(_id),
+					isDeleted: false,
+					isBlocked: false,
+				},
+			},
+			{
+				$addFields: {
+					photo: { $concat: ['https://drive.google.com/uc?id=', '$photo'] },
+					'verifiedId.idFile': {
+						$concat: ['https://drive.google.com/uc?id=', '$verifiedId.idFile'],
+					},
+					'expert.expertDocs': {
+						$concatArrays: [
+							{
+								$map: {
+									input: '$expert.expertDocs',
+									as: 'doc',
+									in: { $concat: ['https://drive.google.com/uc?id=', '$$doc'] },
+								},
+							},
+						],
+					},
+				},
+			},
+			{
+				$project: {
+					password: 0,
+					expertId: 0,
+					// __v: 0,
+				},
+			},
+		]);
+
 		if (!user) {
 			return { code: 2, message: 'userNotfound', data: null };
 		}
@@ -141,7 +192,8 @@ module.exports.getUserById = async (data) => {
 		return {
 			code: 0,
 			message: 'user info',
-			data: { user: getUser(user) },
+			data: { user },
+			// data: { user: getUser(user) },
 		};
 	} catch (error) {
 		throw new Error(error);
@@ -164,7 +216,7 @@ module.exports.deleteUserInfo = async (data) => {
 
 		return {
 			code: 0,
-			message: 'user delete succsessfully ',
+			message: 'user deleted successfully',
 			data: null, //{  user },
 		};
 	} catch (error) {

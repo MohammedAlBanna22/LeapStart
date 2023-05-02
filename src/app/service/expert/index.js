@@ -10,7 +10,6 @@ module.exports.reqExpert = async (req) => {
 			files: files,
 			user: { _id },
 			body: { bio, catagories, hourlyRate }, // should all initial values needed for expert to function as well like(hourRate & and initial working hours ) knowing that expert can update them after
-			body: { bio, catagories, hourlyRate }, // should all initial values needed for expert to function as well like(hourRate & and initial working hours ) knowing that expert can update them after
 		} = req;
 
 		const user = await User.findOne({ _id, isDeleted: false, isExpert: false });

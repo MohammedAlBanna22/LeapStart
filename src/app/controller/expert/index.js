@@ -9,6 +9,7 @@ const {
 	getExpert,
 	getAllExperts,
 	editUserProfile,
+	AvailabelHour,
 } = require('../../service/expert');
 
 module.exports.reqExpert = async (req, res, next) => {
@@ -57,6 +58,23 @@ module.exports.editProfile = async (req, res, next) => {
 		const id = req.params._id;
 		const updatedUserData = req.body;
 		const { code, message, data } = await editUserProfile(id,updatedUserData);
+		if (code === 0) {
+			return next(new Success(message, data));
+		}
+		return next(new BadRequest(message));
+	} catch (error) {
+		console.log(error);
+		return next(new InternalServerError(error));
+	}
+};
+
+
+module.exports.addAvailabelHour = async (req, res, next) => {
+	try {
+		
+		const id = req.user._id;
+		const  {availableHours}  = req.body;
+		const { code, message, data } = await AvailabelHour(id,availableHours);
 		if (code === 0) {
 			return next(new Success(message, data));
 		}

@@ -253,6 +253,7 @@ module.exports.AvailabelHour = async (user,data) => {
 		}
 		expert.availableHours=Avhour;
 		await expert.save();
+		//console.log(expert);
 		return {
 			code: 0,
 			message: 'Avalible Hour added succsessfully ',

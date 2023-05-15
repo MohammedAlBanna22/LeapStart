@@ -243,28 +243,21 @@ module.exports.editUserProfile = async (id,data) => {
 };
 
 
-module.exports.AvailabelHour = async (id,data) => {
+module.exports.AvailabelHour = async (user,data) => {
 	try {
 		const  Avhour  = data;
-		// how to know the experts id without user
-		const user= await User.findById(id);
-		console.log(user);
-		if (!user) {
-			return { code: 1, message: 'UserNotFound', data: null };
-		}
-		const expert= await Expert.findById(user.expertId);
-		console.log(expert);
+		var expertid=user.expertId;
+		const expert= await Expert.findOne({ expertid, isDeleted: false });
 		if(!expert){
 			return { code: 1, message: 'ExpertNotFound', data: null };
 		}
 		expert.availableHours=Avhour;
 		await expert.save();
-		
-			return {
-				code: 0,
-				message: 'Avalible Hour added succsessfully ',
-				data:  null,
-			};
+		return {
+			code: 0,
+			message: 'Avalible Hour added succsessfully ',
+			data:  null,
+		};
 		
   } catch (error) {
     console.log(error);

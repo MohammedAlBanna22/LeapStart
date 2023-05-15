@@ -71,10 +71,9 @@ module.exports.editProfile = async (req, res, next) => {
 
 module.exports.addAvailabelHour = async (req, res, next) => {
 	try {
-		
-		const id = req.user._id;
+		const user = req.user;
 		const  {availableHours}  = req.body;
-		const { code, message, data } = await AvailabelHour(id,availableHours);
+		const { code, message, data } = await AvailabelHour(user,availableHours);
 		if (code === 0) {
 			return next(new Success(message, data));
 		}

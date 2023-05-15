@@ -23,7 +23,7 @@ const router = express.Router();
  * 				get all data user
  * 				and expert get his data as well from his own id
  *
- * 3. get all experts with filter pagination search ==> Bana work on it
+ * 	done 3. get all experts with filter pagination search ==> Bana work on it
  *
  * 4. update profile what is acceptable and what's ==> from user
  *
@@ -45,6 +45,9 @@ router.post(
 );
 
 router.get('/:id', isAuthenticatedVerified, controller.getExpert);
-router.put('/editProfile/:_id',  controller.editProfile); //edit //isAuthenticatedVerified,
+
+router.put('/editProfile/:_id', controller.editProfile); //edit //isAuthenticatedVerified,///TODO: this should be mounted at user not expert
+// and we add a different request here to edit specified expert data or use the user one for the both depending on the ui
 router.post('/availabelHour',isAuthenticatedVerified,controller.addAvailabelHour); 
+
 module.exports = router;

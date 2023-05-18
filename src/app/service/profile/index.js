@@ -51,7 +51,7 @@ module.exports.getUserById = async (data) => {
 				$project: {
 					password: 0,
 					expertId: 0,
-					// __v: 0,
+					
 				},
 			},
 		]);
@@ -64,7 +64,6 @@ module.exports.getUserById = async (data) => {
 			code: 0,
 			message: 'user info',
 			data: { user },
-			// data: { user: getUser(user) },
 		};
 	} catch (error) {
 		throw new Error(error);
@@ -77,12 +76,9 @@ module.exports.getAllUsers = async (data) => {
 	try {
 		// filter by categorize
 		let { search, filter, sort, offset, limit } = data;
-
 		limit = limit ? parseInt(limit) : 10;
 		offset = offset ? parseInt(offset) : 0;
-
 		/* to handle sort input */
-		
 		if (sort && sort[0] == '-') {
 			sort = { [sort.slice(1)]: -1 };
 		} else if (sort) {

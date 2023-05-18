@@ -6,9 +6,6 @@ const fs = require('fs');
 module.exports.getUserById = async (data) => {
 	try {
 		const _id = data;
-		// const user = await User.findOne({ _id, isDeleted: false }).populate(
-		// 	'expertId'
-		// );
 		const user = await User.aggregate([
 			{
 				$lookup: {

@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const Request = require('./request');
+// schema to add
+// category // DoB // bio ==> expert as well ///
+
+// payments history total and all ... ==> another schema
+
 const UserSchema = new mongoose.Schema(
 	{
 		name: {
@@ -25,6 +30,7 @@ const UserSchema = new mongoose.Schema(
 			trim: true,
 			type: String,
 		},
+		// profile panner
 		verifiedId: {
 			status: {
 				type: String,

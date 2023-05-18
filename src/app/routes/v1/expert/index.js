@@ -48,6 +48,6 @@ router.get('/:id', isAuthenticatedVerified, controller.getExpert);
 
 router.put('/editProfile/:_id', controller.editProfile); //edit //isAuthenticatedVerified,///TODO: this should be mounted at user not expert
 // and we add a different request here to edit specified expert data or use the user one for the both depending on the ui
-router.post('/availabelHour',isAuthenticatedVerified,controller.addAvailabelHour); 
+
 
 module.exports = router;

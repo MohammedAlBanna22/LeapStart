@@ -242,26 +242,3 @@ module.exports.editUserProfile = async (id,data) => {
   }
 };
 
-
-module.exports.AvailabelHour = async (user,data) => {
-	try {
-		const  Avhour  = data;
-		var expertid=user.expertId;
-		const expert= await Expert.findOne({ expertid, isDeleted: false });
-		if(!expert){
-			return { code: 1, message: 'ExpertNotFound', data: null };
-		}
-		expert.availableHours=Avhour;
-		await expert.save();
-		//console.log(expert);
-		return {
-			code: 0,
-			message: 'Avalible Hour added succsessfully ',
-			data:  null,
-		};
-		
-  } catch (error) {
-    console.log(error);
-    throw new Error(error);
-  }
-};

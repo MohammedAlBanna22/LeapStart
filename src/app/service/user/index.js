@@ -128,7 +128,7 @@ module.exports.sendCodeToEmail = async (data) => {
 };
 
 ///**Search by id**/
-
+//dublicate in profile
 module.exports.getUserById = async (data) => {
 	try {
 		const _id = data;

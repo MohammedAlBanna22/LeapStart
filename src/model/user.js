@@ -11,6 +11,10 @@ const UserSchema = new mongoose.Schema(
 			trim: true,
 			type: String,
 		},
+		fullname: {
+			trim: true,
+			type: String,
+		},
 		email: {
 			trim: true,
 			type: String,
@@ -24,6 +28,15 @@ const UserSchema = new mongoose.Schema(
 		},
 		phone: {
 			trim: true,
+			type: String,
+		},
+		bio: {
+			type: String,
+		},
+		Dob:{
+			type:Date,
+		},
+		Specialty:{
 			type: String,
 		},
 		photo: {

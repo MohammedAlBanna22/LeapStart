@@ -7,11 +7,8 @@
         a. name and bio 
         b. Full Name, Phone Number, Country, Date Of Birth,
          Specialty(category need better naming and make the same the name offer all the api)
-        c. photos updated
-
-
-
-
+         
+         c. photos updated
         expert => d. expert related edits 
           ==> 
           1. categories => needs docs  ,salary ? send request to admin 
@@ -20,3 +17,16 @@
 
   
 */
+
+const express = require('express');
+const { validateRequest } = require('../../../../utils/validation');
+const controller = require('../../../controller/user/profile');
+const isAuthenticated = require('../../../../utils/middleware/auth/auth');
+const router = express.Router();
+
+router.get('/getuser/:_id', controller.getUser); //isAuthenticated
+router.get('/getall', controller.getUsers); //isAuthenticatedVerified,
+router.put('/editdetails', isAuthenticated, controller.editDetails);
+router.put('/editfulldetails', isAuthenticated, controller.editFullDetails);
+
+module.exports = router;

@@ -27,4 +27,6 @@ router.use('/password', require('./password')); // forget recover password // us
 
 router.use('/upload', require('./upload')); // for id doc upload
 
+router.use('/profile', require('./profile'));
+
 module.exports = router;

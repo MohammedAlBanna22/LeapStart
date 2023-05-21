@@ -6,11 +6,10 @@ const { Success } = require('../../../utils/response/success/successes');
 
 const {
 	getUserById,
-    getAllUsers,
-    editUserDetail,
-    editUserFullDetail,
-	
-} = require('../../service/profile');
+	getAllUsers,
+	editUserDetail,
+	editUserFullDetail,
+} = require('../../service/user/profile');
 
 module.exports.getUser = async (req, res, next) => {
 	try {
@@ -42,7 +41,7 @@ module.exports.editDetails = async (req, res, next) => {
 	try {
 		const id = req.user._id;
 		const updatedUserData = req.body;
-		const { code, message, data } = await editUserDetail(id,updatedUserData);
+		const { code, message, data } = await editUserDetail(id, updatedUserData);
 		if (code === 0) {
 			return next(new Success(message, data));
 		}
@@ -56,7 +55,10 @@ module.exports.editFullDetails = async (req, res, next) => {
 	try {
 		const id = req.user._id;
 		const updatedFullData = req.body;
-		const { code, message, data } = await editUserFullDetail(id,updatedFullData);
+		const { code, message, data } = await editUserFullDetail(
+			id,
+			updatedFullData
+		);
 		if (code === 0) {
 			return next(new Success(message, data));
 		}

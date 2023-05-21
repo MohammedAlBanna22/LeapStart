@@ -51,7 +51,6 @@ module.exports.getUserById = async (data) => {
 				$project: {
 					password: 0,
 					expertId: 0,
-					
 				},
 			},
 		]);
@@ -70,8 +69,6 @@ module.exports.getUserById = async (data) => {
 	}
 };
 
-
-
 module.exports.getAllUsers = async (data) => {
 	try {
 		// filter by categorize
@@ -86,8 +83,8 @@ module.exports.getAllUsers = async (data) => {
 		} else sort = { createdAt: -1 };
 
 		let query = {
-            isDeleted:false,
-            isBlocked:false,
+			isDeleted: false,
+			isBlocked: false,
 		};
 
 		if (filter) {
@@ -96,12 +93,7 @@ module.exports.getAllUsers = async (data) => {
 
 		if (search) {
 			const regex = new RegExp(search, 'i');
-			query.$or = [
-				{ name: regex },
-				{ email: regex },
-				{ phone: regex },
-				
-			];
+			query.$or = [{ name: regex }, { email: regex }, { phone: regex }];
 		}
 		let users = await User.aggregate([
 			{
@@ -112,9 +104,8 @@ module.exports.getAllUsers = async (data) => {
 
 			{
 				$project: {
-					
-						password: 0,
-						//who see data??.. admin?
+					password: 0,
+					//who see data??.. admin?
 				},
 			},
 
@@ -128,80 +119,78 @@ module.exports.getAllUsers = async (data) => {
 				$limit: parseInt(limit),
 			},
 		]);
-	
+
 		if (!users) {
 			return { code: 1, message: 'User not found ', data: null };
 		}
 		return {
 			code: 0,
 			message: 'Users info',
-			data: {  users },
+			data: { users },
 		};
 	} catch (error) {
 		console.log(error);
 		throw new Error(error);
 	}
 };
-module.exports.editUserDetail = async (id,data) => {
+module.exports.editUserDetail = async (id, data) => {
 	try {
 		const { name, bio } = data;
 		console.log(id);
 		console.log(name, bio);
-		  const user = await User.findOneAndUpdate(
-			{ _id: id }, 
-			{$set:{
-				name:name,
-				bio:bio,
-			}},
-			 { new: true }
-			);
-			if(!user){
-				return { code: 2, message: 'nothing to found', data: null };
-			}
-		
-			return {
-				code: 0,
-				message: 'User name & bio Update succsessfully ',
-				data:  {  user },
-			};
-		
-  } catch (error) {
-    console.log(error);
-    throw new Error(error);
-  }
+		const user = await User.findOneAndUpdate(
+			{ _id: id },
+			{
+				$set: {
+					name: name,
+					bio: bio,
+				},
+			},
+			{ new: true }
+		);
+		if (!user) {
+			return { code: 2, message: 'nothing to found', data: null };
+		}
+
+		return {
+			code: 0,
+			message: 'User name & bio Update successfully ',
+			data: { user },
+		};
+	} catch (error) {
+		console.log(error);
+		throw new Error(error);
+	}
 };
-module.exports.editUserFullDetail = async (id,data) => {
+module.exports.editUserFullDetail = async (id, data) => {
 	try {
-		const {fullname,phone,country,Dob,Specialty} = data;
+		const { fullname, phone, country, Dob, Specialty } = data;
 		console.log(id);
-		console.log(fullname,phone,country,Dob,Specialty);
-		  const user = await User.findOneAndUpdate(
-			{ _id: id }, 
-			{$set:{
-				fullname:fullname,
-				phone:phone,
-                country:country,
-                Dob:Dob,
-                Specialty:Specialty,
+		console.log(fullname, phone, country, Dob, Specialty);
+		const user = await User.findOneAndUpdate(
+			{ _id: id },
+			{
+				$set: {
+					fullname: fullname,
+					phone: phone,
+					country: country,
+					Dob: Dob,
+					Specialty: Specialty,
+				},
+			},
+			{ new: true }
+		);
+		if (!user) {
+			return { code: 2, message: 'nothing to found', data: null };
+		}
 
-			}},
-			 { new: true }
-			);
-			if(!user){
-				return { code: 2, message: 'nothing to found', data: null };
-			}
-		
-			return {
-				code: 0,
-				message: 'User Full Data Update succsessfully ',
-				data:  {  user },
-			};
-		
-  } catch (error) {
-    console.log(error);
-    throw new Error(error);
-  }
+		return {
+			code: 0,
+			message: 'User Full Data Update successfully ',
+			data: { user },
+		};
+	} catch (error) {
+		console.log(error);
+		throw new Error(error);
+	}
 };
-
-
-

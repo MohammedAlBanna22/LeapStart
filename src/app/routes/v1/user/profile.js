@@ -24,8 +24,8 @@ const controller = require('../../../controller/user/profile');
 const isAuthenticated = require('../../../../utils/middleware/auth/auth');
 const router = express.Router();
 
-router.get('/getuser/:_id', controller.getUser); //isAuthenticated
-router.get('/getall', controller.getUsers); //isAuthenticatedVerified,
+router.get('/getuser/:_id',isAuthenticated,controller.getUser); 
+router.get('/getall',isAuthenticatedVerified,controller.getUsers); 
 router.put('/editdetails', isAuthenticated, controller.editDetails);
 
 

@@ -133,64 +133,69 @@ module.exports.getAllUsers = async (data) => {
 		throw new Error(error);
 	}
 };
+
 module.exports.editUserDetail = async (id, data) => {
 	try {
-		const { name, bio } = data;
-		console.log(id);
-		console.log(name, bio);
-		const user = await User.findOneAndUpdate(
-			{ _id: id },
-			{
-				$set: {
-					name: name,
-					bio: bio,
-				},
-			},
-			{ new: true }
-		);
-		if (!user) {
-			return { code: 2, message: 'nothing to found', data: null };
-		}
-
-		return {
-			code: 0,
-			message: 'User name & bio Update successfully ',
-			data: { user },
-		};
+	  const { name, bio, fname, phone, country, Dob, Specialty } = data;
+	  //console.log(id);
+	  //console.log(name, bio, fname, phone, country, Dob, Specialty);
+  
+	  const updateFields = {};
+  
+	  if (name) {
+		updateFields.name = name;
+	  }
+  
+	  if (bio) {
+		updateFields.bio = bio;
+	  }
+  
+	  if (fname) {
+		updateFields.fname = fname;
+	  }
+  
+	  if (phone) {
+		updateFields.phone = phone;
+	  }
+  
+	  if (country) {
+		updateFields.country = country;
+	  }
+  
+	  if (Dob) {
+		updateFields.Dob = Dob;
+	  }
+  
+	  if (Specialty) {
+		updateFields.Specialty = Specialty;
+	  }
+  
+	  const updateCount = Object.keys(updateFields).length;
+  
+	  if (updateCount === 0) {
+		return { code: 2, message: 'No fields provided for update', data: null };
+	  }
+  
+	  const user = await User.findOneAndUpdate(
+		{ _id: id,
+		isDeleted:false,
+		isBlocked:false,
+		 },
+		{ $set: updateFields },
+		{ new: true }
+	  );
+  
+	  if (!user) {
+		return { code: 2, message: 'User not Found', data: null };
+	  }
+  
+	  return {
+		code: 0,
+		message: 'User details updated successfully',
+		data: { user },
+	  };
 	} catch (error) {
-		console.log(error);
-		throw new Error(error);
+	  console.log(error);
+	  throw new Error(error);
 	}
-};
-module.exports.editUserFullDetail = async (id, data) => {
-	try {
-		const { fullname, phone, country, Dob, Specialty } = data;
-		console.log(id);
-		console.log(fullname, phone, country, Dob, Specialty);
-		const user = await User.findOneAndUpdate(
-			{ _id: id },
-			{
-				$set: {
-					fullname: fullname,
-					phone: phone,
-					country: country,
-					Dob: Dob,
-					Specialty: Specialty,
-				},
-			},
-			{ new: true }
-		);
-		if (!user) {
-			return { code: 2, message: 'nothing to found', data: null };
-		}
-
-		return {
-			code: 0,
-			message: 'User Full Data Update successfully ',
-			data: { user },
-		};
-	} catch (error) {
-		console.log(error);
-		throw new Error(error);
-	}
-};
+  };

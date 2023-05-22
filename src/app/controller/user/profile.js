@@ -8,7 +8,7 @@ const {
 	getUserById,
 	getAllUsers,
 	editUserDetail,
-	editUserFullDetail,
+
 } = require('../../service/user/profile');
 
 module.exports.getUser = async (req, res, next) => {
@@ -42,23 +42,6 @@ module.exports.editDetails = async (req, res, next) => {
 		const id = req.user._id;
 		const updatedUserData = req.body;
 		const { code, message, data } = await editUserDetail(id, updatedUserData);
-		if (code === 0) {
-			return next(new Success(message, data));
-		}
-		return next(new BadRequest(message));
-	} catch (error) {
-		console.log(error);
-		return next(new InternalServerError(error));
-	}
-};
-module.exports.editFullDetails = async (req, res, next) => {
-	try {
-		const id = req.user._id;
-		const updatedFullData = req.body;
-		const { code, message, data } = await editUserFullDetail(
-			id,
-			updatedFullData
-		);
 		if (code === 0) {
 			return next(new Success(message, data));
 		}

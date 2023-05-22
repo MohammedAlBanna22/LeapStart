@@ -27,6 +27,6 @@ const router = express.Router();
 router.get('/getuser/:_id', controller.getUser); //isAuthenticated
 router.get('/getall', controller.getUsers); //isAuthenticatedVerified,
 router.put('/editdetails', isAuthenticated, controller.editDetails);
-router.put('/editfulldetails', isAuthenticated, controller.editFullDetails);
+
 
 module.exports = router;

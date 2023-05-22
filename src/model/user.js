@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema(
 			trim: true,
 			type: String,
 		},
-		fullname: {
+		fname: {
 			trim: true,
 			type: String,
 		},

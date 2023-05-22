@@ -25,7 +25,7 @@ const isAuthenticated = require('../../../../utils/middleware/auth/auth');
 const router = express.Router();
 
 router.get('/getuser/:_id',isAuthenticated,controller.getUser); 
-router.get('/getall',isAuthenticatedVerified,controller.getUsers); 
+router.get('/getall',isAuthenticated,controller.getUsers); 
 router.put('/editdetails', isAuthenticated, controller.editDetails);
 
 

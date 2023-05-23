@@ -33,10 +33,10 @@ const UserSchema = new mongoose.Schema(
 		bio: {
 			type: String,
 		},
-		Dob:{
-			type:Date,
+		Dob: {
+			type: Date,
 		},
-		Specialty:{
+		Specialty: {
 			type: String,
 		},
 		photo: {

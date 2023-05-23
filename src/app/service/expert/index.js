@@ -232,7 +232,7 @@ module.exports.editUserProfile = async (id, data) => {
 
 		return {
 			code: 0,
-			message: 'User Update succsessfully ',
+			message: 'User Update successfully ',
 			data: { user },
 		};
 	} catch (error) {

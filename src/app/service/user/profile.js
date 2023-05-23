@@ -120,13 +120,24 @@ module.exports.getAllUsers = async (data) => {
 			},
 		]);
 
+		const count = await User.aggregate([
+			{
+				$unwind: {
+					path: '$user',
+					preserveNullAndEmptyArrays: true,
+				},
+			},
+			{ $match: { ...query } },
+			{ $count: 'count' },
+		]);
+
 		if (!users) {
 			return { code: 1, message: 'User not found ', data: null };
 		}
 		return {
 			code: 0,
 			message: 'Users info',
-			data: { users },
+			data: { count, users },
 		};
 	} catch (error) {
 		console.log(error);

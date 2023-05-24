@@ -11,10 +11,10 @@ const UserSchema = new mongoose.Schema(
 			trim: true,
 			type: String,
 		},
-		fname: {
-			trim: true,
-			type: String,
-		},
+		// fname: {
+		// 	trim: true,
+		// 	type: String,
+		// },
 		email: {
 			trim: true,
 			type: String,
@@ -36,14 +36,17 @@ const UserSchema = new mongoose.Schema(
 		Dob: {
 			type: Date,
 		},
-		Specialty: {
-			type: String,
-		},
+		// Specialty: {
+		// 	type: String,
+		// },
 		photo: {
 			trim: true,
 			type: String,
 		},
-		// profile panner
+		profilePanner: {
+			trim: true,
+			type: String,
+		},
 		verifiedId: {
 			status: {
 				type: String,
@@ -78,7 +81,23 @@ const UserSchema = new mongoose.Schema(
 			default: 'user',
 		},
 
-		isClientVerified: {
+		bookedSessions: {
+			type: Number,
+			default: 0,
+		},
+		pendingSessions: {
+			type: Number,
+			default: 0,
+		},
+		doneSessions: {
+			type: Number,
+			default: 0,
+		}, // this should stay if the prev indicated all booked session whether done or not
+		sessionPaymentTotal: {
+			type: Number,
+			default: 0,
+		},
+		isClientPaymentVerified: {
 			type: Boolean,
 			default: false,
 		},
@@ -94,6 +113,9 @@ const UserSchema = new mongoose.Schema(
 		isBlocked: {
 			type: Boolean,
 			default: false,
+		},
+		blockReason: {
+			type: String,
 		},
 		lastLogin: {
 			type: Date,

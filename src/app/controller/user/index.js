@@ -61,19 +61,6 @@ module.exports.sendCodeEmail = async (req, res, next) => {
 	}
 };
 
-module.exports.getUser = async (req, res, next) => {
-	try {
-		const id = req.params._id;
-		const { code, message, data } = await getUserById(id);
-		if (code === 0) {
-			return next(new Success(message, data));
-		}
-		return next(new BadRequest(message));
-	} catch (error) {
-		return next(new InternalServerError(error));
-	}
-};
-
 module.exports.deleteUser = async (req, res, next) => {
 	try {
 		const id = req.user._id;

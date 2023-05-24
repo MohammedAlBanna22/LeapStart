@@ -29,6 +29,9 @@ const expertSchema = new mongoose.Schema(
 		expertRate: {
 			type: Number,
 		},
+		numberOfSessions: {
+			type: Number,
+		},
 		status: {
 			type: String,
 			enum: ['pending', 'rejected', 'approved'],

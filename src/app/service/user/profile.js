@@ -147,66 +147,63 @@ module.exports.getAllUsers = async (data) => {
 
 module.exports.editUserDetail = async (id, data) => {
 	try {
-	  const { name, bio, fname, phone, country, Dob, Specialty } = data;
-	  //console.log(id);
-	  //console.log(name, bio, fname, phone, country, Dob, Specialty);
-  
-	  const updateFields = {};
-  
-	  if (name) {
-		updateFields.name = name;
-	  }
-  
-	  if (bio) {
-		updateFields.bio = bio;
-	  }
-  
-	  if (fname) {
-		updateFields.fname = fname;
-	  }
-  
-	  if (phone) {
-		updateFields.phone = phone;
-	  }
-  
-	  if (country) {
-		updateFields.country = country;
-	  }
-  
-	  if (Dob) {
-		updateFields.Dob = Dob;
-	  }
-  
-	  if (Specialty) {
-		updateFields.Specialty = Specialty;
-	  }
-  
-	  const updateCount = Object.keys(updateFields).length;
-  
-	  if (updateCount === 0) {
-		return { code: 2, message: 'No fields provided for update', data: null };
-	  }
-  
-	  const user = await User.findOneAndUpdate(
-		{ _id: id,
-		isDeleted:false,
-		isBlocked:false,
-		 },
-		{ $set: updateFields },
-		{ new: true }
-	  );
-  
-	  if (!user) {
-		return { code: 2, message: 'User not Found', data: null };
-	  }
-  
-	  return {
-		code: 0,
-		message: 'User details updated successfully',
-		data: { user },
-	  };
+		const { name, bio, fname, phone, country, Dob, Specialty } = data;
+		//console.log(id);
+		//console.log(name, bio, fname, phone, country, Dob, Specialty);
+
+		const updateFields = {};
+
+		if (name) {
+			updateFields.name = name;
+		}
+
+		if (bio) {
+			updateFields.bio = bio;
+		}
+
+		if (fname) {
+			updateFields.fname = fname;
+		}
+
+		if (phone) {
+			updateFields.phone = phone;
+		}
+
+		if (country) {
+			updateFields.country = country;
+		}
+
+		if (Dob) {
+			updateFields.Dob = Dob;
+		}
+
+		if (Specialty) {
+			updateFields.Specialty = Specialty;
+		}
+
+		const updateCount = Object.keys(updateFields).length;
+
+		if (updateCount === 0) {
+			return { code: 2, message: 'No fields provided for update', data: null };
+		}
+
+		const user = await User.findOneAndUpdate(
+			{ _id: id, isDeleted: false, isBlocked: false },
+			{ $set: updateFields },
+			{ new: true }
+		);
+
+		if (!user) {
+			return { code: 2, message: 'User not Found', data: null };
+		}
+
+		return {
+			code: 0,
+			message: 'User details updated successfully',
+			data: { user },
+		};
 	} catch (error) {
-	  console.log(error);
-	  throw new Error(error);
+		console.log(error);
+		throw new Error(error);
 	}
-  };
+};

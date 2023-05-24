@@ -9,7 +9,7 @@ module.exports.reqExpert = async (req) => {
 		const {
 			files: files,
 			user: { _id },
-			body: { bio, catagories, hourlyRate }, // should all initial values needed for expert to function as well like(hourRate & and initial working hours ) knowing that expert can update them after
+			body: { bio, catagories, hourlyRate },
 		} = req;
 
 		const user = await User.findOne({ _id, isDeleted: false, isExpert: false });
@@ -69,7 +69,7 @@ module.exports.reqExpert = async (req) => {
 
 		return {
 			code: 0,
-			message: 'success',
+			message: 'commonSuccess.message',
 			data: { expert, user: getUser(user) },
 		};
 	} catch (error) {
@@ -100,7 +100,7 @@ module.exports.getAllExperts = async (data) => {
 		};
 
 		if (filter) {
-			query.status = { $in: Array.isArray(filter) ? filter : [filter] };
+			query.catagories = { $in: Array.isArray(filter) ? filter : [filter] };
 		}
 
 		if (search) {

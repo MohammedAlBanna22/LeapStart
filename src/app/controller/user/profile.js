@@ -8,7 +8,6 @@ const {
 	getUserById,
 	getAllUsers,
 	editUserDetail,
-
 } = require('../../service/user/profile');
 
 module.exports.getUser = async (req, res, next) => {

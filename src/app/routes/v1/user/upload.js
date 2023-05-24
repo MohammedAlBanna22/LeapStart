@@ -22,5 +22,6 @@ router.post(
 	isAuthenticated,
 	controller.profileImage
 );
-router.get('/getfile', isAuthenticated, controller.getIDFile);
+
+// router.get('/getfile', isAuthenticated, controller.getIDFile);
 module.exports = router;

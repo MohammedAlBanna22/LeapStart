@@ -11,10 +11,6 @@ const UserSchema = new mongoose.Schema(
 			trim: true,
 			type: String,
 		},
-		// fname: {
-		// 	trim: true,
-		// 	type: String,
-		// },
 		email: {
 			trim: true,
 			type: String,
@@ -33,17 +29,17 @@ const UserSchema = new mongoose.Schema(
 		bio: {
 			type: String,
 		},
-		Dob: {
+		dob: {
 			type: Date,
 		},
 		// Specialty: {
 		// 	type: String,
 		// },
-		photo: {
+		profileImage: {
 			trim: true,
 			type: String,
 		},
-		profilePanner: {
+		profileBanner: {
 			trim: true,
 			type: String,
 		},

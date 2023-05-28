@@ -2,6 +2,13 @@ const { User, Expert } = require('../../../model');
 const { getUser } = require('../../../responseModel/user');
 const mongoose = require('mongoose');
 const fs = require('fs');
+const {
+	driveService,
+} = require('../../../utils/googleServices/googleDriveService');
+const {
+	uploadFile,
+	getFolder,
+} = require('../../../utils/googleServices/functionality');
 
 module.exports.getUserById = async (data) => {
 	try {
@@ -145,48 +152,30 @@ module.exports.getAllUsers = async (data) => {
 	}
 };
 
-module.exports.editUserDetail = async (id, data) => {
+module.exports.editUserProfile = async (id, data, files) => {
 	try {
-		const { name, bio, fname, phone, country, Dob, Specialty } = data;
-		//console.log(id);
-		//console.log(name, bio, fname, phone, country, Dob, Specialty);
-
+		const { name, bio, fname, phone, country, dob } = data;
+		// const { profileImage, profileBanner } = files;
+		const profileImage = files['profileImage'];
+		const profileBanner = files['profileBanner'];
 		const updateFields = {};
+		if (name) updateFields.name = name;
+		if (bio) updateFields.bio = bio;
+		if (fname) updateFields.fname = fname;
+		if (phone) updateFields.phone = phone;
+		if (country) updateFields.country = country;
+		if (dob) updateFields.dob = dob;
 
-		if (name) {
-			updateFields.name = name;
+		if (profileImage) {
+			const file = profileImage[0];
+			const folder = await getFolder('profileImage');
+			updateFields.profileImage = await uploadFile(file, folder);
 		}
-
-		if (bio) {
-			updateFields.bio = bio;
+		if (profileBanner) {
+			const file = profileBanner[0];
+			const folder = await getFolder('profileBanner');
+			updateFields.profileBanner = await uploadFile(file, folder);
 		}
-
-		if (fname) {
-			updateFields.fname = fname;
-		}
-
-		if (phone) {
-			updateFields.phone = phone;
-		}
-
-		if (country) {
-			updateFields.country = country;
-		}
-
-		if (Dob) {
-			updateFields.Dob = Dob;
-		}
-
-		if (Specialty) {
-			updateFields.Specialty = Specialty;
-		}
-
-		const updateCount = Object.keys(updateFields).length;
-
-		if (updateCount === 0) {
-			return { code: 2, message: 'No fields provided for update', data: null };
-		}
-
 		const user = await User.findOneAndUpdate(
 			{ _id: id, isDeleted: false, isBlocked: false },
 			{ $set: updateFields },

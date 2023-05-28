@@ -1,7 +1,13 @@
 require('dotenv').config();
 const { User, Expert } = require('../../../model');
 const { getUser } = require('../../../responseModel/user');
-const { driveService } = require('../../../utils/googleDriveService');
+const {
+	driveService,
+} = require('../../../utils/googleServices/googleDriveService');
+const {
+	uploadFile,
+	getFolder,
+} = require('../../../utils/googleServices/functionality');
 const fs = require('fs');
 
 module.exports.reqExpert = async (req) => {
@@ -9,7 +15,7 @@ module.exports.reqExpert = async (req) => {
 		const {
 			files: files,
 			user: { _id },
-			body: { bio, catagories, hourlyRate },
+			body: { catagories, hourlyRate },
 		} = req;
 
 		const user = await User.findOne({ _id, isDeleted: false, isExpert: false });
@@ -20,30 +26,15 @@ module.exports.reqExpert = async (req) => {
 
 		if (!files) return { code: 1, message: 'user.notFoundFile' };
 
-		const folderName = 'expertReq';
-		let folder = await driveService.searchFolder(folderName);
-		if (!folder) {
-			folder = await driveService.createFolder(folderName);
-		}
-
+		const folder = await getFolder('expertReq');
 		const upFiles = await Promise.all(
-			files.map(async (file) => {
-				const { originalname, mimetype, path } = file;
-				const upFile = await driveService.saveFile(
-					originalname,
-					path,
-					mimetype,
-					folder.id
-				);
-				return upFile;
-			})
+			files.map(async (file) => uploadFile(file, folder))
 		);
 
 		const expertDocs = upFiles.map((upFile) => upFile.data.id);
 		let expert;
 		if (user.expertId) {
 			expert = await Expert.findOne({ _id: user.expertId });
-			expert.bio = bio;
 			expert.expertDocs = expertDocs;
 			expert.status = 'pending';
 			expert.catagories = catagories;
@@ -54,7 +45,6 @@ module.exports.reqExpert = async (req) => {
 		} else {
 			expert = await Expert.create({
 				user: _id,
-				bio,
 				expertDocs,
 				status: 'pending',
 				catagories,
@@ -205,38 +195,6 @@ module.exports.getExpert = async (expertId) => {
 		}
 		return { code: 0, message: `expert is ${expert.status}`, data: expert };
 	} catch (error) {
-		throw new Error(error);
-	}
-};
-
-module.exports.editUserProfile = async (id, data) => {
-	try {
-		const { name, country, phone, email } = data;
-		console.log(id);
-		console.log(name, country, phone, email);
-		const user = await User.findOneAndUpdate(
-			{ _id: id },
-			{
-				$set: {
-					name: name,
-					country: country,
-					phone: phone,
-					email: email,
-				},
-			},
-			{ new: true }
-		);
-		if (!user) {
-			return { code: 2, message: 'nothing to found', data: null };
-		}
-
-		return {
-			code: 0,
-			message: 'User Update successfully ',
-			data: { user },
-		};
-	} catch (error) {
-		console.log(error);
 		throw new Error(error);
 	}
 };

@@ -21,11 +21,42 @@
 const express = require('express');
 const { validateRequest } = require('../../../../utils/validation');
 const controller = require('../../../controller/user/profile');
+const { upload, uploadImage } = require('../../../../utils/multerUploader');
+const {
+	uploadId,
+	editProfile,
+} = require('../../../validationSchema/user/profile');
 const isAuthenticated = require('../../../../utils/middleware/auth/auth');
+
 const router = express.Router();
 
 router.get('/:_id', controller.getUser);
-router.get('/', controller.getUsers);
-router.put('/', isAuthenticated, controller.editDetails);
 
+router.get('/', controller.getUsers);
+
+router.put(
+	'/',
+	uploadImage.fields([
+		{ name: 'profileImage', maxCount: 1 },
+		{ name: 'profileBanner', maxCount: 1 },
+	]),
+	isAuthenticated,
+	[editProfile, validateRequest],
+	controller.editProfile
+);
+
+router.post(
+	'/id',
+	upload.single('file'),
+	isAuthenticated,
+	[uploadId, validateRequest],
+	controller.uploadId
+);
+
+// router.post(
+// 	'/profile-image',
+// 	uploadImage.single('file'),
+// 	isAuthenticated,
+// 	controller.profileImage
+// ); // this need to be deleted
 module.exports = router;

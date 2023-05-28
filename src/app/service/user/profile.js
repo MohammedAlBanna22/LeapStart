@@ -170,11 +170,13 @@ module.exports.editUserProfile = async (id, data, files) => {
 			const file = profileImage[0];
 			const folder = await getFolder('profileImage');
 			updateFields.profileImage = await uploadFile(file, folder);
+			fs.unlinkSync(file.path);
 		}
 		if (profileBanner) {
 			const file = profileBanner[0];
 			const folder = await getFolder('profileBanner');
 			updateFields.profileBanner = await uploadFile(file, folder);
+			fs.unlinkSync(file.path);
 		}
 		const user = await User.findOneAndUpdate(
 			{ _id: id, isDeleted: false, isBlocked: false },
@@ -189,6 +191,44 @@ module.exports.editUserProfile = async (id, data, files) => {
 		return {
 			code: 0,
 			message: 'User details updated successfully',
+			data: { user },
+		};
+	} catch (error) {
+		console.log(error);
+		throw new Error(error);
+	}
+};
+
+module.exports.uploadId = async (data) => {
+	try {
+		const { _id, file, idNumber, idDocumentType } = data;
+		console.log('here to upload id');
+		const user = await User.findOne({ _id, isDeleted: false });
+		if (!user) {
+			return { code: 1, message: 'user.notFoundUser' };
+		}
+
+		if (!file) return { code: 1, message: 'user.notFoundFile' };
+
+		// const { originalname, mimetype, path } = file;
+
+		let folder = await getFolder('userID');
+		const upFile = await uploadFile(file, folder);
+		user.verifiedId = {
+			status: 'pending',
+			idDocumentType,
+			idNumber,
+			idFile: upFile,
+		};
+
+		await user.save({ sendIdRequest: true });
+
+		//delete file
+		fs.unlinkSync(file.path);
+
+		return {
+			code: 0,
+			message: 'File uploaded successfully',
 			data: { user },
 		};
 	} catch (error) {

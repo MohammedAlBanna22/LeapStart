@@ -15,7 +15,7 @@ module.exports.reqExpert = async (req) => {
 		const {
 			files: files,
 			user: { _id },
-			body: { catagories, hourlyRate },
+			body: { catagories, hourlyRate, expertBio },
 		} = req;
 
 		const user = await User.findOne({ _id, isDeleted: false, isExpert: false });
@@ -39,6 +39,7 @@ module.exports.reqExpert = async (req) => {
 			expert.status = 'pending';
 			expert.catagories = catagories;
 			expert.hourlyRate = hourlyRate;
+			expert.expertBio = expertBio;
 			await expert.save();
 			// await user.populate('expertId');
 			// console.log(user);
@@ -49,6 +50,7 @@ module.exports.reqExpert = async (req) => {
 				status: 'pending',
 				catagories,
 				hourlyRate,
+				expertBio,
 			});
 			user.expertId = expert._id;
 		}

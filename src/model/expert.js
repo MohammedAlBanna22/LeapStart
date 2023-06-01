@@ -44,9 +44,9 @@ const expertSchema = new mongoose.Schema(
 		expertDocs: {
 			type: [String],
 		},
-		// bio: {
-		// 	type: String,
-		// },
+		expertBio: {
+			type: String,
+		},
 		catagories: {
 			type: [String],
 		},

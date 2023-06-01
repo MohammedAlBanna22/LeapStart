@@ -31,7 +31,7 @@ module.exports.reqExpert = async (req) => {
 			files.map(async (file) => uploadFile(file, folder))
 		);
 
-		const expertDocs = upFiles.map((upFile) => upFile.data.id);
+		const expertDocs = upFiles.map((upFile) => upFile);
 		let expert;
 		if (user.expertId) {
 			expert = await Expert.findOne({ _id: user.expertId });
@@ -71,6 +71,8 @@ module.exports.reqExpert = async (req) => {
 module.exports.getAllExperts = async (data) => {
 	try {
 		// filter by categorize
+		/// sort by salary , rate ,  maybe number of sessions they made before !?
+
 		let { search, filter, sort, offset, limit } = data;
 
 		limit = limit ? parseInt(limit) : 10;

@@ -78,8 +78,11 @@ module.exports.getUserById = async (data) => {
 
 module.exports.getAllUsers = async (data) => {
 	try {
-		// filter by categorize
+		// filter by role
+		// sort by the amount they paid the num of sessions they made etc..
+		// this is a req for the admin dashboard
 		let { search, filter, sort, offset, limit } = data;
+
 		limit = limit ? parseInt(limit) : 10;
 		offset = offset ? parseInt(offset) : 0;
 		/* to handle sort input */
@@ -156,8 +159,9 @@ module.exports.editUserProfile = async (id, data, files) => {
 	try {
 		const { name, bio, fname, phone, country, dob } = data;
 		// const { profileImage, profileBanner } = files;
-		const profileImage = files['profileImage'];
-		const profileBanner = files['profileBanner'];
+		profileImage = files['profileImage'];
+		profileBanner = files['profileBanner'];
+
 		const updateFields = {};
 		if (name) updateFields.name = name;
 		if (bio) updateFields.bio = bio;

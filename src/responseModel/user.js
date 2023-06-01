@@ -2,11 +2,16 @@
  *       we hide data like password and alter data like links to be complete */
 module.exports.getUser = (user) => {
 	const expert = user.expertId;
-	if (expert.expertDocs) {
-		expert.expertDocs = expert.expertDocs.map(
-			(id) => `https://drive.google.com/uc?id=${id}`
-		);
+	if (expert) {
+		user.populate('expertId');
+		if (expert.expertDocs) {
+			expert.expertDocs = expert.expertDocs.map(
+				(id) => `https://drive.google.com/uc?id=${id}`
+			);
+		}
 	}
+
+	// return user;
 	return {
 		_id: user._id,
 		name: user.name,

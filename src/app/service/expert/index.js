@@ -18,8 +18,12 @@ module.exports.reqExpert = async (req) => {
 			body: { catagories, hourlyRate, expertBio },
 		} = req;
 
-		const user = await User.findOne({ _id, isDeleted: false, isExpert: false });
-
+		const user = await User.findOne({
+			_id,
+			isDeleted: false,
+			isExpert: false,
+		}).populate('expertId');
+		// return { code: 0, message: 'test population', data: user };
 		if (!user) {
 			return { code: 1, message: 'user.notFoundUser' };
 		}

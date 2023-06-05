@@ -37,6 +37,8 @@ app.get('/', require('./healthCheck'));
 
 app.use('/api/v1', require('./app/routes/mainRouter'));
 
+app.use('/api/v1/admin', require('./admin/'));
+
 app.use('*', (req, res) =>
 	res.status(404).send(req.t('CommonError.pageNotFound'))
 );

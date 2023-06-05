@@ -8,14 +8,11 @@
 
 const express = require('express');
 
-const controller = require('../../../controller/admin');
-const { isAuthenticatedRole } = require('../../../../utils/middleware/auth');
+const controller = require('../../controller/admin');
 
 const router = express.Router();
 
-router.post('/verify_id', isAuthenticatedRole('admin'), (req, res) => {
-	res.json({ success: true, user });
-});
-// router.post('/expertHandler', controller.expertHandler);
+router.post('/verify_id', controller.verifyId);
+router.post('/expert_handler', controller.expertHandler);
 // router.post('/blockUser',controller.blockU ser);
 module.exports = router;

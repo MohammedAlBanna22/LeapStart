@@ -1,6 +1,7 @@
 const {
 	BadRequest,
 	InternalServerError,
+	NotFound,
 } = require('../../../utils/response/error/errors');
 const { Success } = require('../../../utils/response/success/successes');
 

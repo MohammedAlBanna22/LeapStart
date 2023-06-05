@@ -13,6 +13,7 @@ const {
 module.exports.getUserById = async (data) => {
 	try {
 		const _id = data;
+
 		const user = await User.aggregate([
 			{
 				$lookup: {
@@ -62,10 +63,9 @@ module.exports.getUserById = async (data) => {
 			},
 		]);
 
-		if (!user) {
+		if (!user[0]) {
 			return { code: 2, message: 'userNotfound', data: null };
 		}
-
 		return {
 			code: 0,
 			message: 'user info',
@@ -98,7 +98,7 @@ module.exports.getAllUsers = async (data) => {
 		};
 
 		if (filter) {
-			query.status = { $in: Array.isArray(filter) ? filter : [filter] };
+			query.role = { $in: Array.isArray(filter) ? filter : [filter] };
 		}
 
 		if (search) {

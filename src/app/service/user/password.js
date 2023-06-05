@@ -29,13 +29,6 @@ module.exports.forgotPassword = async (data) => {
 		verification.verificationCode = code;
 		await verification.save();
 
-		// req.notificationObject = {
-		//   code,
-		//   user,
-		//   type: config.get('NOTIFICATION_TYPES').EMAIL_VERIFICATION,
-		//   emailType: config.get('EMAIL_TYPES').RESET_PASSWORD,
-		// };verificationCode
-
 		await sendForgetPasswordCode(user.email, code);
 		return {
 			code: 0,

@@ -23,9 +23,6 @@ const expertSchema = new mongoose.Schema(
 		hourlyRate: {
 			type: Number,
 		},
-		availableHours: {
-			type: [Date],
-		},
 		expertRate: {
 			type: Number,
 		},
@@ -50,15 +47,18 @@ const expertSchema = new mongoose.Schema(
 		catagories: {
 			type: [String],
 		},
-		bookedHours: {
-			type: [
-				{
-					startTime: { type: Date, required: true },
-					endTime: { type: Date, required: true },
-				},
-			],
-			default: [],
-		},
+		// availableHours: {
+		// 	type: [Date],
+		// }, /// => need to be deleted since we have a dedicated working hours module
+		// bookedHours: {
+		// 	type: [
+		// 		{
+		// 			startTime: { type: Date, required: true },
+		// 			endTime: { type: Date, required: true },
+		// 		},
+		// 	],
+		// 	default: [],
+		// }, // => need to be deleted since we have dedicated module for sessions
 	},
 	{ timestamps: true }
 );

@@ -7,6 +7,8 @@ const calendarSchema = new mongoose.Schema({
 		ref: 'User',
 	},
 });
-
+/**
+ * this may be not needed **
+ */
 const Calendar = mongoose.model('Calendar', calendarSchema);
 module.exports = Calendar;

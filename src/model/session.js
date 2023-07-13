@@ -9,7 +9,7 @@
  *
  */
 const mongoose = require('mongoose');
-const session = new mongoose.Schema({
+const sessionSchema = new mongoose.Schema({
 	expertId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Expert',
@@ -19,3 +19,21 @@ const session = new mongoose.Schema({
 		ref: 'User',
 	},
 });
+
+const session = mongoose.model('Session', sessionSchema);
+module.exports = session;
+
+/**
+ * ref to expert
+ * ref user
+ * start time
+ * end time
+ * status ==>
+ * payment status ==>
+ * amount ==>
+ * currency ==> dollar by default
+ * feedback {expert, user}
+ * rate {expert, user}
+ * timeStamp
+ * isCancelled {boolean, who, why, when}
+ */

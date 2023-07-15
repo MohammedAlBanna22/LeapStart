@@ -1,17 +1,3 @@
-/**
- * expert :TODO:
- *  1. userID : ref to user
- *  2. hourRate : dollar per hour
- *  3. available hours 0 booked hours => [] time at least up for the next 7
- *      days or the time the user identified // update it some how
- *      ==> into a diff  module
- *  4. expert rate : ==> the level of the expert //forget for now
- *  5. expert docs ==> cv old work
- *  6. bio
- *  7. fields /tags ==> in user // as expertise
- *  8.
- */
-
 const mongoose = require('mongoose');
 const User = require('./user');
 const expertSchema = new mongoose.Schema(

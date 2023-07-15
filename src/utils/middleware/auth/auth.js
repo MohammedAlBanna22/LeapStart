@@ -1,7 +1,7 @@
 const { Unauthorized, AccessDenied } = require('../../response/error/errors');
 const { verifyIdToken } = require('../../jwt');
 const { User } = require('../../../model');
-
+const { getUser } = require('../../../responseModel/user');
 async function isAuthenticated(req, res, next) {
 	const {
 		headers: { authorization },
@@ -40,7 +40,7 @@ async function isAuthenticated(req, res, next) {
 			return next(new AccessDenied('Blocked Account'));
 		}
 
-		req.user = user;
+		req.user = await getUser(user);
 		return next();
 	} catch (err) {
 		console.log(err);

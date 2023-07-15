@@ -1,27 +1,25 @@
-/**TODO: make a function to unite the response of data like user where
- *       we hide data like password and alter data like links to be complete */
-module.exports.getUser = (user) => {
-	const expert = user.expertId;
-	if (expert) {
-		user.populate('expertId');
+// const { Expert, User } = require('../model/');
+
+const link = 'https://drive.google.com/uc?id=';
+module.exports.getUser = async (user) => {
+	let expert;
+	if (user.expertId) {
+		await user.populate('expertId');
+		expert = user.expertId;
 		if (expert.expertDocs) {
-			expert.expertDocs = expert.expertDocs.map(
-				(id) => `https://drive.google.com/uc?id=${id}`
-			);
+			expert.expertDocs = expert.expertDocs.map((id) => `${link}${id}`);
 		}
 	}
-
-	// return user;
 	return {
 		_id: user._id,
 		name: user.name,
 		email: user.email,
 		country: user.country,
 		phone: user.phone,
-		photo: user.photo ? `https://drive.google.com/uc?id=${user.photo}` : null,
+		photo: user.photo ? `${link}${user.photo}` : null,
 		verifiedId: {
 			...user.verifiedId,
-			idFile: `https://drive.google.com/uc?id=${user.photo}`,
+			idFile: `${link}${user.photo}`,
 		},
 		verifiedEmail: user.verifiedEmail,
 		role: user.role,

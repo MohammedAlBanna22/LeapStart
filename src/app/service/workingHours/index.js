@@ -1,3 +1,10 @@
+const {
+	Expert,
+	User,
+	WorkingHours: workingHours,
+	WorkingHours,
+} = require('../../../model');
+
 module.exports.getAll = async (user, query) => {
 	try {
 		return { code: 0, message: 'getAll', data: { user, query } };
@@ -14,7 +21,12 @@ module.exports.get = async (user, id) => {
 };
 module.exports.post = async (user, data) => {
 	try {
-		return { code: 0, message: 'post', data: { user, data } };
+		const { startTime, endTime } = data;
+		const expertId = user.expert.id;
+
+		// let workingHour = await WorkingHours.create({expert});
+
+		return { code: 0, message: 'post', data: { expertId, user, data } };
 	} catch (error) {
 		throw new Error(error);
 	}

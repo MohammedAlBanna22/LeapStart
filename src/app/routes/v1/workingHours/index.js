@@ -1,13 +1,10 @@
 const express = require('express');
-const { workingHours } = require('../../../../model/');
+const { WorkingHours: workingHours } = require('../../../../model/');
 const {
 	isAuthenticatedRole,
 } = require('../../../../utils/middleware/auth/index');
 const controller = require('../../../controller/workingHours/');
 const router = express.Router();
-
-// routes here should be used only by experts
-// so use the auth for that
 
 router.use(isAuthenticatedRole('expert'));
 

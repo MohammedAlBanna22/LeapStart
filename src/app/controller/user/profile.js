@@ -57,10 +57,11 @@ module.exports.editProfile = async (req, res, next) => {
 };
 
 module.exports.uploadId = async (req, res, next) => {
-	const { id } = req.user;
+	const { _id } = req.user;
+	console.log(req.user);
 	try {
 		const { message, data, code } = await uploadId({
-			_id: id,
+			_id,
 			...req.body,
 			file: req.file,
 		});

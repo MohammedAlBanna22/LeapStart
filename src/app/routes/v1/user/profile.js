@@ -46,7 +46,7 @@ router.put(
 );
 
 router.post(
-	'/id',
+	'/id-file',
 	upload.single('file'),
 	isAuthenticated,
 	[uploadId, validateRequest],

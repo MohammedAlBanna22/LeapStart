@@ -207,6 +207,7 @@ module.exports.uploadId = async (data) => {
 	try {
 		const { _id, file, idNumber, idDocumentType } = data;
 		console.log('here to upload id');
+		console.log(_id);
 		const user = await User.findOne({ _id, isDeleted: false });
 		if (!user) {
 			return { code: 1, message: 'user.notFoundUser' };

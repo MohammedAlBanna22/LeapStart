@@ -42,7 +42,7 @@ module.exports.signup = async (data) => {
 		return {
 			code: 0,
 			message: 'commonSuccess.message',
-			data: { accessToken, refreshToken, user: getUser(user) },
+			data: { accessToken, refreshToken, user },
 		};
 	} catch (error) {
 		throw new Error(error);
@@ -78,7 +78,7 @@ module.exports.login = async (data) => {
 		return {
 			code: 0,
 			message: 'commonSuccess.message',
-			data: { accessToken, refreshToken, user: getUser(user) },
+			data: { accessToken, refreshToken, user },
 		};
 	} catch (error) {
 		console.log(error);

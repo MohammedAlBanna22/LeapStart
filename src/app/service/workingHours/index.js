@@ -5,30 +5,30 @@ module.exports.getAll = async (user, query) => {
 		throw new Error(error);
 	}
 };
-module.exports.get = async () => {
+module.exports.get = async (user, id) => {
 	try {
-		return { code: 0, message: 'get', data: null };
+		return { code: 0, message: 'get', data: { id, user } };
 	} catch (error) {
 		throw new Error(error);
 	}
 };
-module.exports.post = async () => {
+module.exports.post = async (user, data) => {
 	try {
-		return { code: 0, message: 'post', data: null };
+		return { code: 0, message: 'post', data: { user, data } };
 	} catch (error) {
 		throw new Error(error);
 	}
 };
-module.exports.put = async () => {
+module.exports.put = async (user, id, body) => {
 	try {
-		return { code: 0, message: 'put', data: null };
+		return { code: 0, message: 'put', data: { id, body, user } };
 	} catch (error) {
 		throw new Error(error);
 	}
 };
-module.exports.deleteById = async () => {
+module.exports.deleteById = async (user, id) => {
 	try {
-		return { code: 0, message: 'delete', data: null };
+		return { code: 0, message: 'delete', data: { id, user } };
 	} catch (error) {
 		throw new Error(error);
 	}

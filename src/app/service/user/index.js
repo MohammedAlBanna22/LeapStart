@@ -78,7 +78,7 @@ module.exports.login = async (data) => {
 		return {
 			code: 0,
 			message: 'commonSuccess.message',
-			data: { accessToken, refreshToken, user },
+			data: { accessToken, refreshToken, user: await getUser(user) },
 		};
 	} catch (error) {
 		console.log(error);

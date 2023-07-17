@@ -15,13 +15,14 @@ module.exports.reqExpert = async (req) => {
 		const {
 			files: files,
 			user: { _id },
-			body: { catagories, hourlyRate, expertBio },
+			body: { catagories, hourlyRate, expertBio, daysOfWork, from, to },
 		} = req;
-
+		const availableHours = { daysOfWork, from, to };
+		// return { code: 0, message: 'blu', data: req.body };
 		const user = await User.findOne({
 			_id,
 			isDeleted: false,
-			isExpert: false,
+			// isExpert: false,
 		}).populate('expertId');
 		// return { code: 0, message: 'test population', data: user };
 		if (!user) {
@@ -39,11 +40,13 @@ module.exports.reqExpert = async (req) => {
 		let expert;
 		if (user.expertId) {
 			expert = await Expert.findOne({ _id: user.expertId });
-			expert.expertDocs = expertDocs;
+			expert.expertDocs.push(...expertDocs); // need to be tested
 			expert.status = 'pending';
 			expert.catagories = catagories;
 			expert.hourlyRate = hourlyRate;
 			expert.expertBio = expertBio;
+			expert.availableHours = availableHours;
+
 			await expert.save();
 			// await user.populate('expertId');
 			// console.log(user);
@@ -55,6 +58,7 @@ module.exports.reqExpert = async (req) => {
 				catagories,
 				hourlyRate,
 				expertBio,
+				availableHours,
 			});
 			user.expertId = expert._id;
 		}

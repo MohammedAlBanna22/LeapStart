@@ -26,6 +26,7 @@ const expertSchema = new mongoose.Schema(
 		},
 		expertDocs: {
 			type: [String],
+			default: [],
 		},
 		expertBio: {
 			type: String,
@@ -33,9 +34,19 @@ const expertSchema = new mongoose.Schema(
 		catagories: {
 			type: [String],
 		},
-		// availableHours: {
-		// 	type: [Date],
-		// }, /// => need to be deleted since we have a dedicated working hours module
+		availableHours: {
+			daysOfWork: {
+				type: [String],
+				default: [],
+			},
+			from: {
+				type: String,
+			},
+			to: {
+				type: String,
+			},
+		},
+		/// => need to be deleted since we have a dedicated working hours module
 		// bookedHours: {
 		// 	type: [
 		// 		{

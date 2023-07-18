@@ -39,10 +39,16 @@ const expertSchema = new mongoose.Schema(
 				type: [String],
 				default: [],
 			},
-			from: {
+			fromTime: {
 				type: String,
 			},
-			to: {
+			toTime: {
+				type: String,
+			},
+			fromDate: {
+				type: String,
+			},
+			toDate: {
 				type: String,
 			},
 		},

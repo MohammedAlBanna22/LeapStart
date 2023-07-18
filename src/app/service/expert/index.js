@@ -15,9 +15,18 @@ module.exports.reqExpert = async (req) => {
 		const {
 			files: files,
 			user: { _id },
-			body: { catagories, hourlyRate, expertBio, daysOfWork, from, to },
+			body: {
+				catagories,
+				hourlyRate,
+				expertBio,
+				daysOfWork,
+				fromTime,
+				toTime,
+				fromDate,
+				toDate,
+			},
 		} = req;
-		const availableHours = { daysOfWork, from, to };
+		const availableHours = { daysOfWork, fromTime, toTime, fromDate, toDate };
 		// return { code: 0, message: 'blu', data: req.body };
 		const user = await User.findOne({
 			_id,

@@ -79,7 +79,7 @@ module.exports.reqExpert = async (req) => {
 		return {
 			code: 0,
 			message: 'commonSuccess.message',
-			data: { expert, user: getUser(user) },
+			data: { user },
 		};
 	} catch (error) {
 		console.log(error);

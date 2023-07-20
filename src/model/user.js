@@ -32,9 +32,6 @@ const UserSchema = new mongoose.Schema(
 		dob: {
 			type: Date,
 		},
-		// Specialty: {
-		// 	type: String,
-		// },
 		profileImage: {
 			trim: true,
 			type: String,

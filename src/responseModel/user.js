@@ -2,6 +2,7 @@
 
 const link = 'https://drive.google.com/uc?id=';
 module.exports.getUser = async (user) => {
+	console.log(user);
 	let expert;
 	if (user.expertId) {
 		await user.populate('expertId');

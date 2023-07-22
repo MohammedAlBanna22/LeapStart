@@ -2,7 +2,7 @@
 
 const link = 'https://drive.google.com/uc?id=';
 module.exports.getUser = async (user) => {
-	console.log(user);
+	// console.log(user);
 	let expert;
 	if (user.expertId) {
 		await user.populate('expertId');
@@ -20,7 +20,7 @@ module.exports.getUser = async (user) => {
 		photo: user.photo ? `${link}${user.photo}` : null,
 		verifiedId: {
 			...user.verifiedId,
-			idFile: `${link}${user.photo}`,
+			idFile: `${link}${user.idFile}`,
 		},
 		verifiedEmail: user.verifiedEmail,
 		role: user.role,

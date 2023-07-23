@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const config = require('config');
 const Users = require('../../../model/user');
 const Verification = require('../../../model/verify');
 // const { randomNumber } = require('../../../utils/helpers');

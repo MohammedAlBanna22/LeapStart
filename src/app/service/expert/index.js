@@ -53,9 +53,9 @@ module.exports.reqExpert = async (req) => {
 			expert.status = 'pending';
 			expert.catagories = catagories;
 			expert.hourlyRate = hourlyRate;
-			expert.expertBio = expertBio;
-			expert.availableHours = availableHours;
-
+			// expert.expertBio = expertBio;
+			(user.bio = expertBio), (expert.availableHours = availableHours);
+			await user.save();
 			await expert.save();
 			// await user.populate('expertId');
 			// console.log(user);
@@ -66,10 +66,11 @@ module.exports.reqExpert = async (req) => {
 				status: 'pending',
 				catagories,
 				hourlyRate,
-				expertBio,
 				availableHours,
 			});
 			user.expertId = expert._id;
+			user.bio = expertBio;
+			await user.save();
 		}
 		await user.save({ sendExpertRequest: true });
 

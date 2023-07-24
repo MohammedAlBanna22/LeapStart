@@ -18,6 +18,8 @@ module.exports.getUser = async (user) => {
 		country: user.country,
 		phone: user.phone,
 		photo: user.photo ? `${link}${user.photo}` : null,
+		bio: user.bio,
+		dob: user.dob,
 		verifiedId: {
 			...user.verifiedId,
 			idFile: `${link}${user.idFile}`,

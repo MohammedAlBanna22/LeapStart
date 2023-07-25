@@ -5,3 +5,5 @@ module.exports.Expert = require('./expert');
 module.exports.Calendar = require('./calendar');
 module.exports.Session = require('./session');
 module.exports.WorkingHours = require('./workingHours');
+module.exports.Post = require('./post');
+

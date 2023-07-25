@@ -28,9 +28,9 @@ const expertSchema = new mongoose.Schema(
 			type: [String],
 			default: [],
 		},
-		expertBio: {
-			type: String,
-		},
+		// expertBio: {
+		// 	type: String,
+		// },
 		catagories: {
 			type: [String],
 		},

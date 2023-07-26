@@ -1,6 +1,12 @@
+const { Expert, Session, User } = require('../../../model');
+const { isDateWithinAvailableHours } = require('./helper');
 module.exports.post = async (user, body) => {
 	try {
-		return { code: 0, message: 'post', data: { body, user } };
+		const { expertId } = body;
+
+		let expert = await Expert.findOne({ _id: expertId, isDeleted: false });
+
+		return { code: 0, message: '', data: { expert } };
 	} catch (error) {
 		console.log(error);
 		throw new Error(error);

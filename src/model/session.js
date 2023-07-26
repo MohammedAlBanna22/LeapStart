@@ -16,7 +16,7 @@ const sessionSchema = new mongoose.Schema(
 		endTime: { type: Date },
 		status: {
 			type: String,
-			enum: ['pending'],
+			enum: ['pending', 'approved', 'rejected', 'cancelled'],
 			default: 'pending',
 		},
 		payment: {
@@ -27,7 +27,7 @@ const sessionSchema = new mongoose.Schema(
 			},
 			status: {
 				type: String,
-				enum: ['pending'],
+				enum: ['pending', 'done'],
 				default: 'pending',
 			},
 		},

@@ -23,7 +23,7 @@ module.exports.getUser = async (user) => {
 		dob: user.dob,
 		verifiedId: {
 			...user.verifiedId,
-			idFile: idFile ? `${link}${user.idFile}` : null,
+			idFile: user.idFile ? `${link}${user.idFile}` : null,
 		},
 		verifiedEmail: user.verifiedEmail,
 		role: user.role,

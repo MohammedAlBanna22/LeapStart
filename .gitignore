@@ -2,3 +2,5 @@
 /node_modules
 /uploads/
 googleCredentials.json
+mockUsersSignup.json
+testDataMock.http

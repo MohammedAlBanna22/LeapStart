@@ -109,6 +109,7 @@ module.exports.getAllExperts = async (data) => {
 		let query = {
 			'user.isDeleted': false,
 			'user.isBlocked': false,
+			status: 'approved',
 		};
 
 		if (filter) {

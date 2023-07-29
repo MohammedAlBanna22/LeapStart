@@ -1,4 +1,5 @@
 const { User,Post, Expert } = require('../../../model');
+const { getExpert } = require('../../../app/service/expert');
 const mongoose = require('mongoose');
 
 module.exports.createpost = async (data) => {
@@ -34,20 +35,24 @@ module.exports.createpost = async (data) => {
 module.exports.getAllposts = async (data) => {
 	try {
 		const { id } = data;
-		const expert=await Expert.findOne({_id:id});
+		const expert= await getExpert(id);
+		//console.log(expert);
+		const {user,catagories} = expert.data;
+		const {name,photo}=user;
+		//console.log(photo);
 		if (!expert){
 			return { code: 1, message: ' expert not found',data:null };
 		}	
-		const catagories=expert.catagories;
 		const expertPost =await Post.find({expertId:id,isDeleted:false});
 		if (!expertPost)
 		{
 			return { code: 1, message: 'expertpost.notFound',data:null };
 		}
 		const fulldata={
+			name,
 			catagories,
-			expertPost,
-			
+			photo,
+			expertPost,	
 		};
 		return {
 			code: 0,

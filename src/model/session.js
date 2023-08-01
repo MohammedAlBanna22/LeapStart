@@ -43,7 +43,7 @@ const sessionSchema = new mongoose.Schema(
 		clientRate: {
 			type: Number,
 		},
-		Canceled: {
+		canceled: {
 			isCanceled: {
 				type: Boolean,
 				default: false,
@@ -53,7 +53,7 @@ const sessionSchema = new mongoose.Schema(
 			},
 			canceller: {
 				type: String,
-				enum: ['client', 'expert'],
+				enum: ['user', 'expert'],
 			},
 			cancellingTime: {
 				type: Date,

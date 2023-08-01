@@ -7,9 +7,9 @@ const controller = require('../../../controller/session/');
 
 const isAuthenticated = require('../../../../utils/middleware/auth/auth');
 
+router.use('/expert', require('./expert')); // respond,
 router.use(isAuthenticated);
 
-router.use('/expert', require('./expert')); // respond,
 router.use('/user', require('./user')); // post, put/change details, delete/cancel
 
 router.get('/:id', controller.getById);

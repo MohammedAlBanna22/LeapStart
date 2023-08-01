@@ -81,15 +81,47 @@ module.exports.post = async (user, body) => {
 		throw new Error(error);
 	}
 };
-module.exports.put = async (user, id, body) => {
+
+module.exports.put = async (user, id, data) => {
 	try {
-		return { code: 0, message: 'put', data: { id, body, user } };
+		const userId = user._id;
+		const { status, clientFeedBack, clientRate, reason } = data;
+		const session = await Session.findOne({
+			_id: id,
+			userId,
+		});
+		if (!session) {
+			return { code: 1, message: 'Session not found' };
+		}
+
+		if (status === 'cancelled') {
+			// TODO: handle user canceling the session
+			(session.status = 'cancelled'), (session.canceled.isCanceled = true);
+			session.canceled.canceller = 'user';
+			session.canceled.reason = reason;
+			session.canceled.cancellingTime = moment().format();
+			await session.save(); //TODO: find if we need to make a hook to handle notification
+		}
+		if (clientFeedBack) {
+			session.clientFeedBack = clientFeedBack;
+		}
+		if (clientRate) {
+			session.clientRate = clientRate;
+		}
+		await session.save(); // coold make a hook to handle notification
+
+		return {
+			code: 0,
+			message: 'user session updated successfully ',
+			data: { session },
+		};
 	} catch (error) {
 		console.log(error);
 		throw new Error(error);
 	}
 };
 
+//TODO: need to be studied and maybe deleted
 module.exports.cancel = async (user, id) => {
 	try {
 		return { code: 0, message: 'cancel', data: { id, user } };

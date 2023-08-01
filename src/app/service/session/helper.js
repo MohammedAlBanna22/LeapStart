@@ -89,3 +89,4 @@ module.exports = {
 // const end = '2023-07-25T14:30:00'; //
 
 // console.log(isSessionValid(givenDate, end, availableHours));
+// console.log(moment().format('yyyy-mm-DD hh:mm'));

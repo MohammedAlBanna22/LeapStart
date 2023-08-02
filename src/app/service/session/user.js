@@ -25,7 +25,7 @@ module.exports.post = async (user, body) => {
 		availableHours.daysOfWork = availableHours.daysOfWork.map(
 			(day) => daysIndex[day]
 		);
-		console.log({ start, end });
+		// console.log({ start, end });
 		// check available working hours of expert
 		if (!isSessionValid(start, end, availableHours)) {
 			return {

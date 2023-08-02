@@ -13,7 +13,7 @@ module.exports.getById = async function (req, res, next) {
 		return next(new BadRequest(message));
 	} catch (error) {
 		console.log(error);
-		return next(new InternalServerError(message));
+		return next(new InternalServerError(error));
 	}
 };
 

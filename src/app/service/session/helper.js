@@ -52,6 +52,7 @@ function isDateWithinAvailableHours(givenDate, availableHours) {
 }
 
 function isSessionValid(start, end, availableHours) {
+	// console.log(start, end, availableHours);
 	return (
 		isDateWithinAvailableHours(start, availableHours) &&
 		isDateWithinAvailableHours(end, availableHours)
@@ -89,4 +90,4 @@ module.exports = {
 // const end = '2023-07-25T14:30:00'; //
 
 // console.log(isSessionValid(givenDate, end, availableHours));
-// console.log(moment().format('yyyy-mm-DD hh:mm'));
+// console.log(moment().startOf('isoWeek').add(-1, 'day'));

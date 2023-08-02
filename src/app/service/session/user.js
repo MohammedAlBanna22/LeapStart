@@ -6,7 +6,7 @@ module.exports.post = async (user, body) => {
 	try {
 		const { expertId, sessionStart } = body;
 		const userId = user._id;
-
+		console.log(sessionStart);
 		let start = moment(sessionStart);
 		let end = moment(sessionStart).add(1, 'hours');
 
@@ -25,7 +25,7 @@ module.exports.post = async (user, body) => {
 		availableHours.daysOfWork = availableHours.daysOfWork.map(
 			(day) => daysIndex[day]
 		);
-
+		console.log({ start, end });
 		// check available working hours of expert
 		if (!isSessionValid(start, end, availableHours)) {
 			return {
@@ -41,14 +41,20 @@ module.exports.post = async (user, body) => {
 			endTime: { $gte: start }, // Check if the given time is before or equal to the endTime
 		});
 
-		if (existingSession.expertId.toString() === expertId.toString()) {
+		if (
+			existingSession &&
+			existingSession.expertId.toString() === expertId.toString()
+		) {
 			return {
 				code: '1',
 				message: 'expert have a session at this time',
 			};
 		}
 
-		if (existingSession.userId.toString() === userId.toString()) {
+		if (
+			existingSession &&
+			existingSession.userId.toString() === userId.toString()
+		) {
 			return {
 				code: '1',
 				message: 'User have a session at this time',

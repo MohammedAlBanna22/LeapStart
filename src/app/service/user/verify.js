@@ -4,7 +4,6 @@ const jwt = require('../../../utils/jwt');
 module.exports.verifyEmail = async (data) => {
 	try {
 		const { code, _id } = data;
-
 		const user = await User.findOne({ _id, isDeleted: false });
 		if (!user) {
 			return { code: 1, message: 'user.notFoundUser', data: null };

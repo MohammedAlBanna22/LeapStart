@@ -12,11 +12,11 @@ const {
 module.exports.verifyEmail = async (req, res, next) => {
   try {
     // const { verifyCode } = req.body;
-
     const { message, data, code } = await verifyEmail({
       ...req.body,
-      _id: req.user.id,
+      _id: req.user._id,
     });
+    
     if (code === 0) {
       return next(new Success(message, data));
     }

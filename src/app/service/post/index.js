@@ -43,6 +43,8 @@ module.exports.getAllposts = async (data) => {
 		if (!expert){
 			return { code: 1, message: ' expert not found',data:null };
 		}	
+		const exPhoto = photo ? photo : 'No photo available';
+		//console.log(exPhoto);
 		const expertPost =await Post.find({expertId:id,isDeleted:false});
 		if (!expertPost)
 		{
@@ -51,7 +53,7 @@ module.exports.getAllposts = async (data) => {
 		const fulldata={
 			name,
 			catagories,
-			photo,
+			exPhoto,
 			expertPost,	
 		};
 		return {

@@ -13,7 +13,7 @@ module.exports.post = async function (req, res, next) {
 		return next(new BadRequest(message));
 	} catch (error) {
 		console.log(error);
-		return next(new InternalServerError(message));
+		return next(new InternalServerError(error));
 	}
 };
 module.exports.put = async function (req, res, next) {
@@ -29,18 +29,19 @@ module.exports.put = async function (req, res, next) {
 		return next(new BadRequest(message));
 	} catch (error) {
 		console.log(error);
-		return next(new InternalServerError(message));
+		return next(new InternalServerError(error));
 	}
 };
-module.exports.cancel = async function (req, res, next) {
-	try {
-		const { code, message, data } = await cancel(req.user, req.params.id);
-		if (code === 0) {
-			return next(new Success(message, data));
-		}
-		return next(new BadRequest(message));
-	} catch (error) {
-		console.log(error);
-		return next(new InternalServerError(message));
-	}
-};
+
+// module.exports.cancel = async function (req, res, next) {
+// 	try {
+// 		const { code, message, data } = await cancel(req.user, req.params.id);
+// 		if (code === 0) {
+// 			return next(new Success(message, data));
+// 		}
+// 		return next(new BadRequest(message));
+// 	} catch (error) {
+// 		console.log(error);
+// 		return next(new InternalServerError(message));
+// 	}
+// };

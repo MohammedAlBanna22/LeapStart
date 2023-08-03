@@ -12,6 +12,8 @@
 const express = require('express');
 const router = express.Router();
 
+// TODO: implement an request to get if user all his sessions
+// if expert return his sessions and working hours
 router.use('/expert', require('./expert'));
 
 router.use('/user', require('./user'));

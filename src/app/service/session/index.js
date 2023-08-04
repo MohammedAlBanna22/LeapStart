@@ -53,7 +53,7 @@ module.exports.get = async (user, query) => {
 			startTime: { $gte: start, $lte: end },
 		});
 
-		output.sessions = sessions;
+		output.sessions = sessions;	
 
 		return { code: 0, message: 'success , user calender', data: { ...output } };
 	} catch (error) {

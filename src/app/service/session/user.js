@@ -8,6 +8,7 @@ module.exports.post = async (user, body) => {
 		const userId = user._id;
 		console.log(sessionStart);
 		let start = moment(sessionStart);
+		console.log(start);
 		let end = moment(sessionStart).add(1, 'hours');
 
 		let expert = await Expert.findOne({ _id: expertId, isDeleted: false });

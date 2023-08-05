@@ -45,23 +45,30 @@ module.exports.get = async (user, query) => {
 		start = moment(start).add(skip, 'day').toDate();
 		const end = moment(start).add(6, 'day').toDate();
 
-		let sessions;
 		// console.log({ start, end });
 		if (user.isExpert == true) {
 			output.workingHours = user.expert.availableHours;
-			sessions = await Session.find({
+			output.sessions = await Session.find({
 				$or: [{ expertId: user.expert._id }, { userId: user._id }],
 				startTime: { $gte: start, $lte: end },
 			});
+			return {
+				code: 0,
+				message: 'success , expert calender',
+				data: { ...output },
+			};
 		} else {
-			sessions = await Session.findOne({
-				userId: user.id,
+			output.sessions = await Session.find({
+				userId: user._id,
 				startTime: { $gte: start, $lte: end },
 			});
-		}
-		output.sessions = sessions;
 
-		return { code: 0, message: 'success , user calender', data: { ...output } };
+			return {
+				code: 0,
+				message: 'success , user calender',
+				data: { ...output },
+			};
+		}
 	} catch (error) {
 		console.log(error);
 		throw new Error(error);

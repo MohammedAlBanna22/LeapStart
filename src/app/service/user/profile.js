@@ -161,17 +161,27 @@ module.exports.editUserProfile = async (id, data, files) => {
 		// const { profileImage, profileBanner } = files;
 		profileImage = files['profileImage'];
 		profileBanner = files['profileBanner'];
-
 		const updateFields = {};
+		/* make improvment on code
 		if (name) updateFields.name = name;
 		if (bio) updateFields.bio = bio;
 		if (fname) updateFields.fname = fname;
 		if (phone) updateFields.phone = phone;
 		if (country) updateFields.country = country;
 		if (dob) updateFields.dob = dob;
+		*/
+
+		name?updateFields.name=name:null;
+		bio?updateFields.bio=bio:null;
+		fname?updateFields.fname=fname:null;
+		phone?updateFields.phone=phone:null;
+		country?updateFields.country=country:null;
+		dob?updateFields.dob=dob:null;
+
 
 		if (profileImage) {
 			const file = profileImage[0];
+			console.log(file);
 			const folder = await getFolder('profileImage');
 			updateFields.profileImage = await uploadFile(file, folder);
 			fs.unlinkSync(file.path);

@@ -6,7 +6,6 @@ module.exports.getById = async (user, id) => {
 		// return { code: 0, message: '11', data: { user: user.expert._id } };
 		const session = await Session.findOne({
 			_id: id,
-			$or: [{ expertId: user.expert._id }, { userId: user._id }],
 		});
 		if (!session) {
 			return { code: 1, message: 'session Not found' };
@@ -28,6 +27,7 @@ module.exports.getById = async (user, id) => {
 				data: { session },
 			};
 		}
+		return { code: 1, message: "this session doesn't belong to the user" };
 	} catch (error) {
 		console.log(error);
 		throw new Error(error);
@@ -44,16 +44,22 @@ module.exports.get = async (user, query) => {
 		let start = moment().startOf('isoWeek').add(-1, 'day');
 		start = moment(start).add(skip, 'day').toDate();
 		const end = moment(start).add(6, 'day').toDate();
+
+		let sessions;
 		// console.log({ start, end });
 		if (user.isExpert == true) {
 			output.workingHours = user.expert.availableHours;
+			sessions = await Session.find({
+				$or: [{ expertId: user.expert._id }, { userId: user._id }],
+				startTime: { $gte: start, $lte: end },
+			});
+		} else {
+			sessions = await Session.findOne({
+				userId: user.id,
+				startTime: { $gte: start, $lte: end },
+			});
 		}
-		const sessions = await Session.find({
-			$or: [{ expertId: user.expert._id }, { userId: user._id }],
-			startTime: { $gte: start, $lte: end },
-		});
-
-		output.sessions = sessions;	
+		output.sessions = sessions;
 
 		return { code: 0, message: 'success , user calender', data: { ...output } };
 	} catch (error) {

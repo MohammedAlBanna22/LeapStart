@@ -53,18 +53,47 @@ module.exports.get = async (user, query) => {
 		} else {
 			if (user.isExpert == true) {
 				output.workingHours = user.expert.availableHours;
-				output.sessions = await Session.find({
+				data = await Session.find({
 					$or: [{ expertId: user.expert._id }, { userId: user._id }],
 				});
+
+				const aa = await Promise.all(
+					data.map(async (session, i) => {
+						let a = {};
+						a.session = session;
+						a.user = await User.findOne({
+							_id: session.userId,
+						});
+						return a;
+					})
+				);
+				output.data = aa;
+
 				return {
 					code: 0,
 					message: 'success , all expert sessions',
 					data: { ...output },
 				};
 			} else {
-				output.sessions = await Session.find({
+				data = await Session.find({
 					userId: user._id,
 				});
+				// console.log(output.data);
+				const aa = await Promise.all(
+					data.map(async (session, i) => {
+						let a = {};
+						a.session = session;
+						a.expert = await Expert.findOne({
+							_id: session.expertId,
+						});
+						// console.log(a);
+						return a;
+					})
+				);
+				// console.log(aa);
+				// output.data = await Promise.all(promises);
+				output.data = aa;
+				// console.log(output);
 				return {
 					code: 0,
 					message: 'success , all user sessions',
@@ -76,20 +105,47 @@ module.exports.get = async (user, query) => {
 		// console.log({ start, end });
 		if (user.isExpert == true) {
 			output.workingHours = user.expert.availableHours;
-			output.sessions = await Session.find({
+			data = await Session.find({
 				$or: [{ expertId: user.expert._id }, { userId: user._id }],
 				startTime: { $gte: start, $lte: end },
 			});
+			const aa = await Promise.all(
+				data.map(async (session, i) => {
+					let a = {};
+					a.session = session;
+					a.user = await User.findOne({
+						_id: session.userId,
+					});
+					return a;
+				})
+			);
+			output.data = aa;
+
 			return {
 				code: 0,
 				message: 'success , expert calender',
 				data: { ...output },
 			};
 		} else {
-			output.sessions = await Session.find({
+			data = await Session.find({
 				userId: user._id,
 				startTime: { $gte: start, $lte: end },
 			});
+
+			const aa = await Promise.all(
+				data.map(async (session, i) => {
+					let a = {};
+					a.session = session;
+					a.expert = await Expert.findOne({
+						_id: session.expertId,
+					});
+					// console.log(a);
+					return a;
+				})
+			);
+			// console.log(aa);
+			// output.data = await Promise.all(promises);
+			output.data = aa;
 
 			return {
 				code: 0,

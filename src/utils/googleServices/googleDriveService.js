@@ -2,6 +2,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 const { google } = require('googleapis');
+const { OAuth2Client } = require('google-auth-library');
 
 class GoogleDriveService {
 	constructor(clientId, clientSecret, redirectUri, refreshToken) {
@@ -83,6 +84,16 @@ const driveService = new GoogleDriveService(
 	process.env.GOOGLE_DRIVE_REDIRECT_URI,
 	process.env.GOOGLE_DRIVE_REFRESH_TOKEN
 );
+
+const oAuth2Client = new OAuth2Client(
+	process.env.GOOGLE_DRIVE_CLIENT_ID,
+	process.env.GOOGLE_DRIVE_CLIENT_SECRET,
+	process.env.GOOGLE_DRIVE_REDIRECT_URI
+);
+
+const authUrl = oAuth2Client.generateAuthUrl({
+	scope: ['https://www.googleapis.com/auth/calendar'],
+});
 
 /**
  * @type {{GoogleDriveService : GoogleDriveService}}

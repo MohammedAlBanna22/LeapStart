@@ -6,13 +6,15 @@ module.exports.getById = async (user, id) => {
 		// return { code: 0, message: '11', data: { user: user.expert._id } };
 		const session = await Session.findOne({
 			_id: id,
-		});
+		}).populate('expertId');
+		console.log({ session });
 		if (!session) {
 			return { code: 1, message: 'session Not found' };
 		}
+		// console.log(user.isExpert);
 		if (
-			user.isExpert &
-			(session.expertId.toString() === user.expert._id.toString())
+			user.isExpert &&
+			session.expertId.toString() === user.expert._id.toString()
 		) {
 			return {
 				code: 0,

@@ -10,19 +10,19 @@ const {
 } = require('../../../utils/response/error/errors');
 
 module.exports.verifyEmail = async (req, res, next) => {
-	try {
-		// const { verifyCode } = req.body;
-
-		const { message, data, code } = await verifyEmail({
-			...req.body,
-			_id: req.user._id,
-		});
-		if (code === 0) {
-			return next(new Success(message, data));
-		}
-		if (code === 1) {
-			return next(new NotFound(message, data));
-		}
+  try {
+    // const { verifyCode } = req.body;
+    const { message, data, code } = await verifyEmail({
+      ...req.body,
+      _id: req.user._id,
+    });
+    
+    if (code === 0) {
+      return next(new Success(message, data));
+    }
+    if (code === 1) {
+      return next(new NotFound(message, data));
+    }
 
 		return next(new BadRequest(message));
 	} catch (err) {

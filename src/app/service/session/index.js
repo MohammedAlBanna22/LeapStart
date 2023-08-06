@@ -6,8 +6,10 @@ module.exports.getById = async (user, id) => {
 		// return { code: 0, message: '11', data: { user: user.expert._id } };
 		const session = await Session.findOne({
 			_id: id,
-		}).populate('expertId');
-		console.log({ session });
+		});
+		const expert = await Expert.findOne({ _id: session.expertId }).populate(
+			'user'
+		);
 		if (!session) {
 			return { code: 1, message: 'session Not found' };
 		}
@@ -19,14 +21,14 @@ module.exports.getById = async (user, id) => {
 			return {
 				code: 0,
 				message: 'success this is the expert session',
-				data: { session },
+				data: { session, expert },
 			};
 		}
 		if (session.userId.toString() === user._id.toString()) {
 			return {
 				code: 0,
 				message: 'success this is the user session',
-				data: { session },
+				data: { session, expert },
 			};
 		}
 		return { code: 1, message: "this session doesn't belong to the user" };

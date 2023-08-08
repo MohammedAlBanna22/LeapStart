@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 const app = require('./app');
+
+const http = require('http');
+const server = http.createServer(app);
+const videoChatRouter = require('../src/app/routes/v1/meeting/index')(server);
+app.use('/video-chat', videoChatRouter);
+
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
@@ -8,7 +14,7 @@ startServer();
 
 async function startServer() {
 	await connectDB();
-	app.listen(PORT, () => {
+	server.listen(PORT, () => {
 		console.log(`running at port ${PORT}`);
 	});
 }

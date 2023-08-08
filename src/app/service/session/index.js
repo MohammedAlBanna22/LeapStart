@@ -158,3 +158,27 @@ module.exports.get = async (user, query) => {
 		throw new Error(error);
 	}
 };
+
+module.exports.getAll = async (user, body, query) => {
+	try {
+		const { expertId } = body;
+
+		// console.log(expertId);
+		let { skip } = query;
+
+		skip = skip ? skip * 7 : 0;
+		let start, end;
+
+		start = moment().startOf('isoWeek').add(-1, 'day');
+		start = moment(start).add(skip, 'day').toDate();
+		end = moment(start).add(6, 'day').toDate();
+
+		const sessions = await Session.find({
+			expertId,
+			startTime: { $gte: start, $lte: end },
+		});
+		return { code: 0, message: 'success', data: { sessions } };
+	} catch (error) {
+		throw new Error(error);
+	}
+};

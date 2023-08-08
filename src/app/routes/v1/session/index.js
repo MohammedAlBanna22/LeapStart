@@ -11,6 +11,7 @@ router.use('/expert', require('./expert')); // respond,
 router.use(isAuthenticated);
 
 router.use('/user', require('./user')); // post, put/change details, delete/cancel
+router.get('/all', controller.getAll);
 
 router.get('/:id', controller.getById);
 router.get('/', controller.get);

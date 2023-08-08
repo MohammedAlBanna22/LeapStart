@@ -25,7 +25,7 @@ module.exports.forgotPassword = async (data) => {
 			verification = await verification.save();
 		}
 		verification.email = email;
-		verification.verificationCode = code;
+		verification.code = code;
 		await verification.save();
 
 		await sendForgetPasswordCode(user.email, code);
@@ -40,13 +40,14 @@ module.exports.forgotPassword = async (data) => {
 };
 
 module.exports.verifyPasswordCode = async (data) => {
-	const { verificationCode, _id } = data;
 	try {
+		const { verificationCode, _id } = data;
+		// console.log({ verificationCode, _id });
 		const verification = await Verification.findOne({
 			code: verificationCode,
 			userId: _id,
 		});
-
+		// console.log(verification);
 		if (!verification) {
 			return { code: 1, message: 'user.InvalidCode' };
 		}

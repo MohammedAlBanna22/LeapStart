@@ -171,13 +171,12 @@ module.exports.editUserProfile = async (id, data, files) => {
 		if (dob) updateFields.dob = dob;
 		*/
 
-		name?updateFields.name=name:null;
-		bio?updateFields.bio=bio:null;
-		fname?updateFields.fname=fname:null;
-		phone?updateFields.phone=phone:null;
-		country?updateFields.country=country:null;
-		dob?updateFields.dob=dob:null;
-
+		name ? (updateFields.name = name) : null;
+		bio ? (updateFields.bio = bio) : null;
+		fname ? (updateFields.fname = fname) : null;
+		phone ? (updateFields.phone = phone) : null;
+		country ? (updateFields.country = country) : null;
+		dob ? (updateFields.dob = dob) : null;
 
 		if (profileImage) {
 			const file = profileImage[0];
@@ -205,7 +204,7 @@ module.exports.editUserProfile = async (id, data, files) => {
 		return {
 			code: 0,
 			message: 'User details updated successfully',
-			data: { user },
+			data: { user: await getUser(user) },
 		};
 	} catch (error) {
 		console.log(error);

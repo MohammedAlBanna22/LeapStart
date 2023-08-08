@@ -161,7 +161,7 @@ module.exports.get = async (user, query) => {
 
 module.exports.getAll = async (user, body, query) => {
 	try {
-		const { expertId } = body;
+		const { expertId } = query;
 
 		// console.log(expertId);
 		let { skip } = query;

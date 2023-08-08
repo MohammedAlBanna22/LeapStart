@@ -85,7 +85,7 @@ module.exports.get = async (user, query) => {
 						a.session = session;
 						a.expert = await Expert.findOne({
 							_id: session.expertId,
-						});
+						}).populate('user');
 						// console.log(a);
 						return a;
 					})
@@ -138,7 +138,7 @@ module.exports.get = async (user, query) => {
 					a.session = session;
 					a.expert = await Expert.findOne({
 						_id: session.expertId,
-					});
+					}).populate('user');
 					// console.log(a);
 					return a;
 				})
